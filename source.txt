@@ -1,3 +1,4 @@
 https://www.pythonforbeginners.com/basics/how-to-detect-keypress-in-python#:~:text=To%20detect%20keypress%20in%20python%2C%20we%20can%20use%20the%20keyboard,machine%20using%20PIP%20as%20follows.&text=To%20detect%20keypress%2C%20we%20will,defined%20in%20the%20keyboard%20module.
 https://www.folkstalk.com/tech/python-keyboard-input-arrow-keys-with-code-examples/#:~:text=K_LEFT%3A%20It%20is%20used%20to,is%20pressed%20on%20the%20keyboard.
 https://stackoverflow.com/questions/11918999/key-listeners-in-python
+https://www.tutorialspoint.com/python/python_multithreading.htm
