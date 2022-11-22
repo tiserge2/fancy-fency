@@ -1,5 +1,5 @@
 class player:    
-    def __init__(self, state, position, def_range, att_range, block_time, point = 0):
+    def __init__(self, state, position, def_range, att_range, block_time, mvt_speed, att_speed, point = 0):
         print("player created")
         self.state = state
         self.position = position
@@ -7,6 +7,11 @@ class player:
         self.def_range = def_range
         self.att_range = att_range
         self.block_time = block_time
+        self.mvt_speed = mvt_speed
+        self.att_speed = att_speed
+        self.moving = False
+        self.attacking = False
+        self.jumping = True
 
     @property
     def _state(self):
@@ -54,4 +59,43 @@ class player:
     @_block_time.setter
     def _block_time(self, new_block_time):
         self.block_time = new_block_time
+
+    @property
+    def _mvt_speed(self):
+        return self.mvt_speed
     
+    @_mvt_speed.setter
+    def _mvt_speed(self, new_mvt_speed):
+        self.mvt_speed = new_mvt_speed
+
+    @property
+    def _att_speed(self):
+        return self.att_speed
+    
+    @_att_speed.setter
+    def _att_speed(self, new_att_speed):
+        self.att_speed = new_att_speed
+    
+    @property
+    def _moving(self):
+        return self.moving
+    
+    @_moving.setter
+    def _moving(self, new_moving):
+        self.moving = new_moving
+
+    @property
+    def _attacking(self):
+        return self.attacking
+    
+    @_attacking.setter
+    def _attacking(self, new_attacking):
+        self.attacking = new_attacking
+
+    @property
+    def _jumping(self):
+        return self.jumping
+    
+    @_jumping.setter
+    def _jumping(self, new_jumping):
+        self.jumping = new_jumping    
