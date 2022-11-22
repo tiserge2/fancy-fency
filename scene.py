@@ -18,7 +18,7 @@ class scene:
     
     # initialise the scene drawing and control the framing
     def draw_scene(self):
-        Timer(0.1, self.draw_scene).start()
+        Timer(2, self.draw_scene).start()
         """ TODO: make the clear screen work for windows also """
         os.system("clear")
         self.draw_whole_env()
