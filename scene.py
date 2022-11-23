@@ -445,12 +445,44 @@ class scene:
                 text = first_character + second_character
                 final_characters[key] = text
         elif not self.player_1._jumping and self.player_2.jumping:
-            print("player 1 not jumping and player 2 jumping")
-        
+            for key in final_characters:
+                characters_loading  = key 
+                characters_loading_1 = characters_loading - 1
+                characters_loading_2 = characters_loading
+                first_character_pos = player_1._position
+                second_character_pos = player_2._position
+
+                first_character = ""
+                second_character = ""
+
+                if characters_loading == 2:
+                    # first_character = (" " * first_character_pos) + " " + character_1[characters_loading][0]
+                    second_character = (" " * (second_character_pos - len(first_character))) + (" " * 3) + character_2[characters_loading_2][0]
+                elif characters_loading == 3:
+                    # first_character = (" " * first_character_pos) + " " + character_1[characters_loading][0] + character_1[characters_loading][1]  + character_1[characters_loading][2] + character_1[characters_loading][3]
+                    second_character = (" " * (second_character_pos - len(first_character))) + character_2[characters_loading_2][0] + character_2[characters_loading_2][1] + character_2[characters_loading_2][2] + character_2[characters_loading_2][3]
+                elif characters_loading == 5:
+                    # first_character = (" " * first_character_pos) + character_1[characters_loading][0]  + character_1[characters_loading][1]
+                    second_character = (" " * (second_character_pos - len(first_character))) + (" " * 3) +  character_2[characters_loading_2][0]  + character_2[characters_loading_2][1]
+                else:
+                    if characters_loading == 1:
+                        # space_first = ""
+                        space_second = " " * 2
+                    else:
+                        # space_first = " "
+                        space_second = " " * 3
+
+                    # first_character = (" " * first_character_pos) + space_first + character_1[characters_loading]
+                    if characters_loading_2 == 4 or characters_loading_2 == 1:
+                        second_character = (" " * (second_character_pos - len(first_character))) + space_second + character_2[characters_loading_2]
+
+                text = first_character + second_character
+                final_characters[key] = text
+
         return final_characters
 
 player_1 = player("REST", 0, 2, 6, 2, 3, 6)
 player_2 = player("REST", 30, 0, 4, 2,  6, 6)
-player_1._jumping = True
-player_2._jumping = False
+player_1._jumping = False
+player_2._jumping = True
 scene_1 = scene(player_1, player_2, 3)
