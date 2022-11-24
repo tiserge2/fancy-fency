@@ -3,18 +3,20 @@ import os
 from pynput import keyboard
 from player import player 
 import time
+from environement import env
 
 class scene:
     def __init__(self, player1, player2, env):
         self.player_1 = player1
         self.player_2 = player2
+        self.env = env
         self.keyboard_listener = keyboard.Listener(on_press = self.handle_input)
         self.keyboard_listener.start()
         self.win_width = 56
         self.win_height = 0
         self.message_show = False
         self.frame = 10
-        self.obstacles = []
+        # self.env._obstacles = env._obstables
         self.draw_scene()
 
     
@@ -175,7 +177,13 @@ class scene:
 
             # ground drawing
             if characters_shown and not ground_shown:
-                text = (self.win_width - 4) * "#"
+                # text = (self.win_width - 4) * "#"
+                text = ""
+                for j in range((self.win_width)):
+                    if j in self.env._obstacles:
+                        text += "X"
+                    else:
+                        text += "_"
                 text_formater = "{}"
                 ground_shown = True
             
@@ -200,6 +208,7 @@ class scene:
                 print(f"P1 => Distance: {self.player_1._position} | State: {self.player_1._state}")
                 print(f"P2 => Distance: {self.player_2._position} | State: {self.player_2._state}")
                 print(f"Distance 1 and 2: {self.player_2._position - self.player_1._position}")
+                print(f"Obstacles: {str(self.env._obstacles)}")
                 game_stats = True
 
 
@@ -207,21 +216,21 @@ class scene:
     # collision detection
     def can_move(self,player, move):
         if player == 1 and move == "LEFT":
-            return (self.player_1._position > 0) and ((self.player_1._position - 1) not in self.obstacles)
+            return (self.player_1._position > 0) 
         elif player == 1 and move == "RIGHT":
-            return ((self.player_2._position - self.player_1._position) > 4) and ((self.player_1._position + 1) not in self.obstacles)
+            return ((self.player_2._position - self.player_1._position) > 4) and ((self.player_1._position + 2) not in self.env._obstacles)
         elif player == 1 and move == "JUMP_LEFT":
-            return (self.player_1._position + 2 > 0) and ((self.player_1._position - 1) not in self.obstacles)
+            return (self.player_1._position + 2 > 0)
         elif player == 1 and move == "JUMP_RIGHT":
-            return ((self.player_2._position - (self.player_1._position + 2)) > 4) and ((self.player_1._position + 2) not in self.obstacles)  
+            return ((self.player_2._position - (self.player_1._position + 2)) > 4) and ((self.player_1._position + 4) not in self.env._obstacles)
         elif player == 2 and move == "LEFT":
-            return ((self.player_2._position - self.player_1._position) > 4) and ((self.player_2._position - 1) not in self.obstacles)
+            return ((self.player_2._position - self.player_1._position) > 4)
         elif player == 2 and move == "RIGHT":
-            return (self.player_2._position < self.win_width - 9) and ((self.player_2._position + 1) not in self.obstacles)
+            return (self.player_2._position < self.win_width - 9)
         elif player == 2 and move == "JUMP_LEFT":
-            return ((self.player_2._position - (self.player_1._position + 2)) > 4) and ((self.player_2._position + 2) not in self.obstacles)  
+            return ((self.player_2._position - (self.player_1._position + 2)) > 4) 
         elif player == 2 and move == "JUMP_RIGHT":
-            return (self.player_2._position + 2 < self.win_width - 9) and ((self.player_1._position + 2) not in self.obstacles)
+            return (self.player_2._position + 2 < self.win_width - 9)
 
     # reinitialise the player state to REST
     def reinit_player(self, player, delay):
@@ -230,8 +239,8 @@ class scene:
     
     # reset the game to initial position
     def reset_game(self):
-        self.player_1._position = 0
-        self.player_2._position = 12
+        self.player_1._position = self.env._p_1_position
+        self.player_2._position = self.env._p_2_position
         self.frames_shown = 0
         self.player_1._state = "REST"
         self.player_2._state = "REST"
@@ -455,8 +464,9 @@ class scene:
 
         return final_characters
 
-player_1 = player("REST", position = 10, def_range = 4, att_range = 10, block_time = 2, mvt_speed = 0.5, att_speed = 6)
-player_2 = player("REST", position = 20, def_range = 2, att_range = 8, block_time = 2, mvt_speed = 0.5, att_speed = 6)
-player_1._jumping = False
-player_2._jumping = False
-scene_1 = scene(player_1, player_2, 3)
+
+path = "./all_env/env1.ffscene"
+env1 = env(path)
+player_1 = player("REST", position = env1._p_1_position, def_range = 4, att_range = 10, block_time = 2, mvt_speed = 0.5, att_speed = 6)
+player_2 = player("REST", position = env1._p_2_position, def_range = 2, att_range = 8, block_time = 2, mvt_speed = 0.5, att_speed = 6)
+scene_1 = scene(player_1, player_2, env1)

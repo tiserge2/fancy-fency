@@ -11,7 +11,7 @@ class player:
         self.att_speed = att_speed
         self.moving = False
         self.attacking = False
-        self.jumping = True
+        self.jumping = False
 
     @property
     def _state(self):
