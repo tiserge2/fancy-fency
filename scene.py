@@ -68,12 +68,24 @@ class scene:
 
             time.sleep(delay)
             player._position += 1
+
+            time.sleep(delay)
+            player._position += 1
+
+            # time.sleep(delay)
+            # player._position += 1
         else:
             time.sleep(delay)
             player._position -= 1
 
             time.sleep(delay)
             player._position -= 1
+
+            time.sleep(delay)
+            player._position -= 1
+
+            # time.sleep(delay)
+            # player._position -= 1
 
         time.sleep(delay)
         player._jumping = False
@@ -143,7 +155,6 @@ class scene:
         score_board_shown = False
         characters_loading = 0
         characters_shown = False
-        ground_shown = False
         game_stats = False
         size = os.get_terminal_size()
         
@@ -174,18 +185,6 @@ class scene:
                 text = f"| {self.player_1._point} | {self.player_2._point} |"
                 score_board_shown = True
                 text_formater = "{:^" + str((self.win_width - 9)) + "}"
-
-            # ground drawing
-            if characters_shown and not ground_shown:
-                # text = (self.win_width - 4) * "#"
-                text = ""
-                for j in range((self.win_width)):
-                    if j in self.env._obstacles:
-                        text += "X"
-                    else:
-                        text += "_"
-                text_formater = "{}"
-                ground_shown = True
             
             # drawing the players
             if (percentage_win >= 0.60) and characters_shown == False:
@@ -194,6 +193,9 @@ class scene:
                 text = characters[characters_loading]
                 
                 if characters_loading == 6:
+                    text = text.replace(" ", "_") + (self.win_width - 4 - len(text)) * "_"
+                    for obs in self.env._obstacles:
+                        text = text[:obs] + "X" + text[obs+1:]
                     characters_shown = True
 
             
@@ -204,8 +206,8 @@ class scene:
                 print("|") 
 
             # printing utility debugging stuff
-            if not game_stats and ground_shown:
-                print(f"P1 => Distance: {self.player_1._position} | State: {self.player_1._state}")
+            if not game_stats and characters_shown:
+                print("\n",f"P1 => Distance: {self.player_1._position} | State: {self.player_1._state}")
                 print(f"P2 => Distance: {self.player_2._position} | State: {self.player_2._state}")
                 print(f"Distance 1 and 2: {self.player_2._position - self.player_1._position}")
                 print(f"Obstacles: {str(self.env._obstacles)}")
@@ -215,22 +217,36 @@ class scene:
 
     # collision detection
     def can_move(self,player, move):
+        obstacles = []
+
         if player == 1 and move == "LEFT":
-            return (self.player_1._position > 0) 
+            return (self.player_1._position > 0)  and ((self.player_1._position - 1) not in self.env._obstacles)
         elif player == 1 and move == "RIGHT":
             return ((self.player_2._position - self.player_1._position) > 4) and ((self.player_1._position + 2) not in self.env._obstacles)
         elif player == 1 and move == "JUMP_LEFT":
-            return (self.player_1._position + 2 > 0)
+            for i in self.env._obstacles:
+                obstacles.append(i - 1)
+                obstacles.append(i)
+            return (self.player_1._position + 2 > 0) and ((self.player_1._position - 3) not in obstacles)
         elif player == 1 and move == "JUMP_RIGHT":
-            return ((self.player_2._position - (self.player_1._position + 2)) > 4) and ((self.player_1._position + 4) not in self.env._obstacles)
+            for i in self.env._obstacles:
+                obstacles.append(i - 1)
+                obstacles.append(i)
+            return ((self.player_2._position - (self.player_1._position + 2)) > 4) and ((self.player_1._position + 3) not in obstacles)
         elif player == 2 and move == "LEFT":
-            return ((self.player_2._position - self.player_1._position) > 4)
+            return ((self.player_2._position - self.player_1._position) > 4) and ((self.player_2._position + 2) not in self.env._obstacles)
         elif player == 2 and move == "RIGHT":
-            return (self.player_2._position < self.win_width - 9)
+            return (self.player_2._position < self.win_width - 9) and ((self.player_2._position + 5) not in self.env._obstacles)
         elif player == 2 and move == "JUMP_LEFT":
-            return ((self.player_2._position - (self.player_1._position + 2)) > 4) 
+            for i in self.env._obstacles:
+                obstacles.append(i - 1)
+                obstacles.append(i)
+            return ((self.player_2._position - (self.player_1._position + 2)) > 4) and ((self.player_2._position ) not in obstacles)
         elif player == 2 and move == "JUMP_RIGHT":
-            return (self.player_2._position + 2 < self.win_width - 9)
+            for i in self.env._obstacles:
+                obstacles.append(i - 3)
+                obstacles.append(i - 4)
+            return (self.player_2._position + 2 < self.win_width - 9) and ((self.player_2._position + 3) not in obstacles)
 
     # reinitialise the player state to REST
     def reinit_player(self, player, delay):
