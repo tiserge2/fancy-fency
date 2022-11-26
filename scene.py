@@ -15,19 +15,19 @@ class scene:
         self.win_width = 56
         self.win_height = 0
         self.message_show = False
-        self.frame = 10
-        # self.env._obstacles = env._obstables
-        self.draw_scene()
+        self.frame = env._frame
+        self.showing = True
+        self.timer = None
+        # self.draw_scene()
 
-    
     # initialise the scene drawing and control the framing
     def draw_scene(self):
-        Timer(1/self.frame, self.draw_scene).start()
+        self.timer = Timer(1/self.frame, self.draw_scene)
+        self.timer.start()
         """ TODO: make the clear screen work for windows also """
-        os.system("clear")
-        self.draw_whole_env()
-        # for i in self.define_characters():
-        #     print(self.define_characters()[i])
+        if self.showing:
+            os.system("clear")
+            self.draw_whole_env()
 
     # change player state based on their speed attributes
     def init_action(self, player, action, num = 0):
@@ -71,9 +71,6 @@ class scene:
 
             time.sleep(delay)
             player._position += 1
-
-            # time.sleep(delay)
-            # player._position += 1
         else:
             time.sleep(delay)
             player._position -= 1
@@ -84,9 +81,6 @@ class scene:
             time.sleep(delay)
             player._position -= 1
 
-            # time.sleep(delay)
-            # player._position -= 1
-
         time.sleep(delay)
         player._jumping = False
 
@@ -96,59 +90,60 @@ class scene:
             button = key.char
         except Exception as e:
             button = key.name
+        if self.showing:
+            # ============> first player command
+            if button == "a" :
+                # move player 1 to the the left if possible
+                if self.can_move(1, "LEFT") and self.player_1._moving == False:
+                    Thread(target=self.init_action, args=(self.player_1, "LEFT")).start()
+            elif button == "d":
+                # move player 1 to the right if possible
+                if self.can_move(1, "RIGHT") and self.player_1._moving == False:
+                    Thread(target=self.init_action, args=(self.player_1, "RIGHT")).start()
+            elif button == "s":
+                # player 1 blocking
+                if self.player_1._state == "REST":
+                    self.player_1._state = "BLOCK"
+                    Thread(target=self.reinit_player, args=(self.player_1, self.player_2._block_time)).start()
+            elif button == "w":
+                # player 1 attacking
+                if self.player_1._state == "REST" and self.player_1._attacking == False:
+                    Thread(target=self.init_action, args=(self.player_1, "ATTACK", 1)).start()
+            elif button == "e":
+                # player 1 jumping right
+                if self.can_move(1, "JUMP_RIGHT") and self.player_1._moving == False and self.player_1._jumping == False:
+                    Thread(target=self.handle_jump, args=(self.player_1, "RIGHT")).start()
+            elif button == "q":
+                # player 1 jumping left
+                if self.can_move(1, "JUMP_LEFT") and self.player_1._moving == False and self.player_1._jumping == False:
+                    Thread(target=self.handle_jump, args=(self.player_1, "LEFT")).start()
+            # ============> second player command
+            elif button == "left":
+                # move player 2 to the left if possible
+                if self.can_move(2, "LEFT") and self.player_2._moving == False:
+                    Thread(target=self.init_action, args=(self.player_2, "LEFT")).start()
+            elif button == "right":
+                # move player 2 to the right if possible
+                if self.can_move(2, "RIGHT") and self.player_2._moving == False:
+                    Thread(target=self.init_action, args=(self.player_2, "RIGHT")).start()
+            elif button == "k":
+                # player 2 defending
+                if self.player_2._state == "REST":
+                    self.player_2._state = "BLOCK"
+                    Thread(target=self.reinit_player, args=(self.player_2, self.player_2._block_time)).start()
+            elif button == "l" and self.player_1._attacking == False:
+                # player 2 attacking
+                if self.player_2._state == "REST":
+                    Thread(target=self.init_action, args=(self.player_2, "ATTACK", 2)).start()
+            elif button == ".":
+                # player 2 jumping right
+                if self.can_move(2, "JUMP_RIGHT") and self.player_2._moving == False and self.player_2._jumping == False:
+                    Thread(target=self.handle_jump, args=(self.player_2, "RIGHT")).start()
+            elif button == ",":
+                # player 2 jumping left
+                if self.can_move(2, "JUMP_LEFT") and self.player_2._moving == False and self.player_2._jumping == False:
+                    Thread(target=self.handle_jump, args=(self.player_2, "LEFT")).start()
 
-        # ============> first player command
-        if button == "a" :
-            # move player 1 to the the left if possible
-            if self.can_move(1, "LEFT") and self.player_1._moving == False:
-                Thread(target=self.init_action, args=(self.player_1, "LEFT")).start()
-        elif button == "d":
-            # move player 1 to the right if possible
-            if self.can_move(1, "RIGHT") and self.player_1._moving == False:
-                Thread(target=self.init_action, args=(self.player_1, "RIGHT")).start()
-        elif button == "s":
-            # player 1 blocking
-            if self.player_1._state == "REST":
-                self.player_1._state = "BLOCK"
-                Thread(target=self.reinit_player, args=(self.player_1, self.player_2._block_time)).start()
-        elif button == "w":
-            # player 1 attacking
-            if self.player_1._state == "REST" and self.player_1._attacking == False:
-                Thread(target=self.init_action, args=(self.player_1, "ATTACK", 1)).start()
-        elif button == "e":
-            # player 1 jumping right
-            if self.can_move(1, "JUMP_RIGHT") and self.player_1._moving == False and self.player_1._jumping == False:
-                Thread(target=self.handle_jump, args=(self.player_1, "RIGHT")).start()
-        elif button == "q":
-            # player 1 jumping left
-            if self.can_move(1, "JUMP_LEFT") and self.player_1._moving == False and self.player_1._jumping == False:
-                Thread(target=self.handle_jump, args=(self.player_1, "LEFT")).start()
-        # ============> second player command
-        elif button == "left":
-            # move player 2 to the left if possible
-            if self.can_move(2, "LEFT") and self.player_2._moving == False:
-                Thread(target=self.init_action, args=(self.player_2, "LEFT")).start()
-        elif button == "right":
-            # move player 2 to the right if possible
-            if self.can_move(2, "RIGHT") and self.player_2._moving == False:
-                Thread(target=self.init_action, args=(self.player_2, "RIGHT")).start()
-        elif button == "k":
-            # player 2 defending
-            if self.player_2._state == "REST":
-                self.player_2._state = "BLOCK"
-                Thread(target=self.reinit_player, args=(self.player_2, self.player_2._block_time)).start()
-        elif button == "l" and self.player_1._attacking == False:
-            # player 2 attacking
-            if self.player_2._state == "REST":
-                Thread(target=self.init_action, args=(self.player_2, "ATTACK", 2)).start()
-        elif button == ".":
-            # player 2 jumping right
-            if self.can_move(2, "JUMP_RIGHT") and self.player_2._moving == False and self.player_2._jumping == False:
-                Thread(target=self.handle_jump, args=(self.player_2, "RIGHT")).start()
-        elif button == ",":
-            # player 2 jumping left
-            if self.can_move(2, "JUMP_LEFT") and self.player_2._moving == False and self.player_2._jumping == False:
-                Thread(target=self.handle_jump, args=(self.player_2, "LEFT")).start()
         
     # draw everything related to the game being played
     def draw_whole_env(self):
@@ -212,8 +207,6 @@ class scene:
                 print(f"Distance 1 and 2: {self.player_2._position - self.player_1._position}")
                 print(f"Obstacles: {str(self.env._obstacles)}")
                 game_stats = True
-
-
 
     # collision detection
     def can_move(self,player, move):
@@ -297,6 +290,7 @@ class scene:
                 elif self.player_2._state == "ATTACK":
                     self.reset_game()
 
+    # create the skeleton for both players
     def define_characters(self):
         character_1 = {
             1: "<o>",
@@ -341,8 +335,8 @@ class scene:
             for key in final_characters:
                 if key != 6:
                     characters_loading  = key
-                    first_character_pos = player_1._position
-                    second_character_pos = player_2._position
+                    first_character_pos = self.player_1._position
+                    second_character_pos = self.player_2._position
 
                     first_character = ""
                     second_character = ""
@@ -375,8 +369,8 @@ class scene:
             for key in final_characters:
                 if key != 1:
                     characters_loading  = key - 1
-                    first_character_pos = player_1._position
-                    second_character_pos = player_2._position
+                    first_character_pos = self.player_1._position
+                    second_character_pos = self.player_2._position
 
                     first_character = ""
                     second_character = ""
@@ -411,8 +405,8 @@ class scene:
                 characters_loading  = key
                 characters_loading_1 = characters_loading
                 characters_loading_2 = characters_loading - 1
-                first_character_pos = player_1._position
-                second_character_pos = player_2._position
+                first_character_pos = self.player_1._position
+                second_character_pos = self.player_2._position
 
                 first_character = ""
                 second_character = ""
@@ -446,8 +440,8 @@ class scene:
                 characters_loading  = key 
                 characters_loading_1 = characters_loading - 1
                 characters_loading_2 = characters_loading
-                first_character_pos = player_1._position
-                second_character_pos = player_2._position
+                first_character_pos = self.player_1._position
+                second_character_pos = self.player_2._position
 
                 first_character = ""
                 second_character = ""
@@ -483,6 +477,6 @@ class scene:
 
 path = "./all_env/env1.ffscene"
 env1 = env(path)
-player_1 = player("REST", position = env1._p_1_position, def_range = 4, att_range = 10, block_time = 2, mvt_speed = 0.5, att_speed = 6)
-player_2 = player("REST", position = env1._p_2_position, def_range = 2, att_range = 8, block_time = 2, mvt_speed = 0.5, att_speed = 6)
+player_1 = player(position = env1._p_1_position, def_range = 4, att_range = 10, block_time = 2, mvt_speed = 0.5, att_speed = 6)
+player_2 = player(position = env1._p_2_position, def_range = 2, att_range = 8, block_time = 2, mvt_speed = 0.5, att_speed = 6)
 scene_1 = scene(player_1, player_2, env1)

@@ -1,0 +1,21 @@
+[
+    {
+        "player_1": {
+            "def_range": 4,
+            "att_range": 10,
+            "block_time": 2,
+            "mvt_speed": 0.5,
+            "att_speed": 6
+        },
+        "player_2": {
+            "def_range": 2,
+            "att_range": 8,
+            "block_time": 2,
+            "mvt_speed": 0.5,
+            "att_speed": 6
+        },
+        "game": {
+            "frame": 10
+        }
+    }
+]

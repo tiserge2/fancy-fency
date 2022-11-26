@@ -1,9 +1,5 @@
-import os
-from threading import Timer
-
-def show_size():
-    Timer(1, show_size).start()
-    size = os.get_terminal_size()
-    print("columns:", size.columns)
-    print("lines:", size.lines, "\n")
-
+import socket
+s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+s.connect(("8.8.8.8", 80))
+print(s.getsockname()[0])
+s.close()
