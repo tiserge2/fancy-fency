@@ -10,15 +10,12 @@ class server():
         self.server_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.client_connected = ""
         self.client_address = ""
-        # self.search_online_player()
-        # self.start_server()
+        self.start_server()
 
     def get_ip(self):
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         sock.connect(("8.8.8.8", 80))
         address = sock.getsockname()
-        netmask = ipaddress.IPv4Network(address[0]).netmask
-        print(netmask)
         sock.close()
         return address[0]
 

@@ -6,8 +6,8 @@ from pynput import keyboard
 from datetime import datetime
 from threading import Timer, Thread
 import json
-import sys
-
+import re
+from client import client
 
 class menu:
     def __init__(self):
@@ -30,6 +30,14 @@ class menu:
                 return True, "All good"
         except Exception as e:
             return False, "Should be an integer"
+
+    def validate_ip_address(self, ip):
+        test = re.match(r"^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4}$", ip)
+
+        if not test:
+            return False, "Ip Address is not correct."
+        else: 
+            return True, "All good"
 
     # different menu showing
     def main_menu(self):
@@ -221,7 +229,34 @@ class menu:
 
     # search for players over the network
     def launch_player_research(self):
-        print("player research")
+        os.system("clear")
+
+        self.flush_input()
+        ip = input("IP Address:")
+
+        while not self.validate_ip_address(ip)[0]:
+            error_message = self.validate_ip_address(ip)[1]
+            os.system("clear")
+            print("\nError: ",error_message)
+            self.flush_input()
+            ip = input("IP Address:")
+        
+        self.sent_invite(ip)
+
+    def sent_invite(ip):
+        print("sending invite")
+        joueur_1 = client()
+        joueur_1.connect((ip, "55555"))
+
+        if joueur_1.status == "CONNECTED":
+            joueur_1.send({'type': 'INVITE', 'message': "INIT"})
+            
+            if joueur_1.status == "SENT":
+                print("Invite sent to player, waiting for answer...")
+            else:
+                print("There is an error sending the invite to the player...")
+        else:
+            print("There is an error connecting to this ip")
 
     def load_games(self):
         path = "./saved_games/all_games.json"

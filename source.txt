@@ -6,3 +6,4 @@ https://stackoverflow.com/questions/2520893/how-to-flush-the-input-stream/389932
 https://realpython.com/python-sockets/#echo-client-and-server
 https://www.daniweb.com/programming/software-development/threads/132968/how-to-send-broadcast-message-over-network-and-collect-all-the-ipaddress
 https://stackoverflow.com/questions/47316777/calculate-broadcast-by-ip-and-mask
+https://stackoverflow.com/questions/5284147/validating-ipv4-addresses-with-regexp
