@@ -8,6 +8,8 @@ from threading import Timer, Thread
 import json
 import re
 from client import client
+import time
+
 
 class menu:
     def __init__(self):
@@ -19,6 +21,7 @@ class menu:
         # Thread(target=self.main_menu).start()
         self.timer_1 = None
         self.scene_created = False
+        self.player_responded = False
         self.main_menu()
 
     def check_input_menu(self,inp, start, end):
@@ -241,9 +244,9 @@ class menu:
             self.flush_input()
             ip = input("IP Address:")
         
-        self.sent_invite(ip)
+        self.send_invite(ip)
 
-    def sent_invite(self, ip):
+    def send_invite(self, ip):
         print("sending invite")
         joueur_1 = client()
         joueur_1.connect((ip, 55555))
@@ -253,10 +256,24 @@ class menu:
             
             if joueur_1.status == "SENT":
                 print("Invite sent to player, waiting for answer...")
+                n = 5
+                while n != 0:
+                    time.sleep(3)
+                    print("Waiting for player to respond...")
+                    n -= 1
+                
+                if not self.player_responded:
+                    print("No response from sent invitation...")
+                    time.sleep(3)
+                    self.game_type()
             else:
                 print("There is an error sending the invite to the player...")
+                time.sleep(3)
+                self.game_type()
         else:
             print("There is an error connecting to this ip")
+            time.sleep(3)
+            self.game_type()
 
     def load_games(self):
         path = "./saved_games/all_games.json"
