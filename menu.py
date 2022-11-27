@@ -246,7 +246,7 @@ class menu:
     def sent_invite(self, ip):
         print("sending invite")
         joueur_1 = client()
-        joueur_1.connect((ip, "55555"))
+        joueur_1.connect((ip, 55555))
 
         if joueur_1.status == "CONNECTED":
             joueur_1.send({'type': 'INVITE', 'message': "INIT"})
