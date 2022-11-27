@@ -249,7 +249,7 @@ class menu:
         joueur_1.connect((ip, 55555))
 
         if joueur_1.status == "CONNECTED":
-            joueur_1.send({'type': 'INVITE', 'message': "INIT"})
+            joueur_1.send(json.dumps({'type:INVITE,message': "INIT"}))
             
             if joueur_1.status == "SENT":
                 print("Invite sent to player, waiting for answer...")
