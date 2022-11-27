@@ -1,6 +1,7 @@
 import socket
 from threading import Timer, Thread
 import json
+from client import client
 
 class server():
     def __init__(self):
@@ -10,6 +11,7 @@ class server():
         self.server_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.client_connected = ""
         self.client_address = ""
+        self.status = ""
         self.start_server()
 
     def get_ip(self):
@@ -52,6 +54,12 @@ class server():
 
     def process_data(self, data):
         received_data = json.loads(data)
-        print("Data: ", data)
+        print("Data: ", received_data)
+
+        if received_data['type'] == "INVITE" and received_data['message'] == 'INIT':
+            self.server_state = "NEW_INVITE"
+        if received_data['type'] == "INVITE" and received_data['message'] == 'RESPONSE':
+            self.server_state = "NEW_RESPONSE"
+            
 
 serv = server()
