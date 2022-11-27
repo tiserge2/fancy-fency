@@ -243,7 +243,7 @@ class menu:
         
         self.sent_invite(ip)
 
-    def sent_invite(ip):
+    def sent_invite(self, ip):
         print("sending invite")
         joueur_1 = client()
         joueur_1.connect((ip, "55555"))
