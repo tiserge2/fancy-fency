@@ -1,6 +1,6 @@
 import socket
 from threading import Timer, Thread
-import ipaddress
+import json
 
 class server():
     def __init__(self):
@@ -51,6 +51,7 @@ class server():
             print(f"received from {address}:{buf}")
 
     def process_data(self, data):
+        received_data = json.loads(data)
         print("Data: ", data)
 
 serv = server()
