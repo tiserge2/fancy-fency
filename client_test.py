@@ -8,6 +8,7 @@ class Client:
         self.server = socket.gethostbyname(socket.gethostname())
         self.port = 5555
         self.addr = (self.server, self.port)
+        print(self.addr)
         self.id = self.connect()
        
 

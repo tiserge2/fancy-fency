@@ -3,3 +3,6 @@ https://www.folkstalk.com/tech/python-keyboard-input-arrow-keys-with-code-exampl
 https://stackoverflow.com/questions/11918999/key-listeners-in-python
 https://www.tutorialspoint.com/python/python_multithreading.htm
 https://stackoverflow.com/questions/2520893/how-to-flush-the-input-stream/38993222#38993222
+https://realpython.com/python-sockets/#echo-client-and-server
+https://www.daniweb.com/programming/software-development/threads/132968/how-to-send-broadcast-message-over-network-and-collect-all-the-ipaddress
+https://stackoverflow.com/questions/47316777/calculate-broadcast-by-ip-and-mask
