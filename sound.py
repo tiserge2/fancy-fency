@@ -1,17 +1,32 @@
 from pygame import mixer
+import time
 import os
+import json
 
 class sound():
     def __init__(self):
         mixer.init()
+        self.mapping = self.load_mapping()
 
-    def play_sound(self, file):
+    def load_mapping(self):
+        path = "./ressources/sound_mapping.json"
+
+        if(os.path.exists(path)): 
+            f = open(path)
+            data = json.load(f)
+            f.close()
+            print(data)
+            return data[0]
+
+    def play_sound(self, action):
+        file = "./ressources/sound_effect/" + self.mapping[action]
         if os.path.exists(file):
-            mixer.music.load(file)
-            mixer.music.set_volume(0.9)
-            mixer.music.play()
+            try:
+                mixer.music.load(file)
+                mixer.music.set_volume(0.9)
+                mixer.music.play()
+                time.sleep(3)
+            except Exception as e:
+                print("there is an issue")
         else:
             print("not exist")
-
-s = sound()
-s.play_sound("/Users/sergiosuzerainosson/Documents/project/universite_project/programmation_avancee/fancy-fency/ressources/sound_effect/fatality.mp3")

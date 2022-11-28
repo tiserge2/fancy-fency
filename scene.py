@@ -4,6 +4,7 @@ from pynput import keyboard
 from player import player 
 import time
 from environement import env
+from sound import sound
 
 class scene:
     def __init__(self, player1, player2, env):
@@ -18,6 +19,7 @@ class scene:
         self.frame = env._frame
         self.showing = True
         self.timer = None
+        self.sound = sound()
         # self.draw_scene()
 
     # initialise the scene drawing and control the framing
@@ -36,6 +38,7 @@ class scene:
             delay = player._mvt_speed / self.frame
             
             time.sleep(delay)
+            Thread(target=self.sound.play_sound, args=(action, )).start()
             
             if action == "LEFT":
                 player._position = player._position - 1 
@@ -52,6 +55,7 @@ class scene:
             delay = player._att_speed / self.frame
 
             time.sleep(delay)
+            Thread(target=self.sound.play_sound, args=(action, )).start()
 
             player._state = "ATTACK"
             player._attacking = False
@@ -61,6 +65,7 @@ class scene:
     def handle_jump(self, player, way):
         player._jumping = True
         delay = player._mvt_speed / self.frame
+        Thread(target=self.sound.play_sound, args=("JUMP", )).start()
 
         if way == "RIGHT":
             time.sleep(delay)
@@ -201,12 +206,12 @@ class scene:
                 print("|") 
 
             # printing utility debugging stuff
-            if not game_stats and characters_shown:
-                print("\n",f"P1 => Distance: {self.player_1._position} | State: {self.player_1._state}")
-                print(f"P2 => Distance: {self.player_2._position} | State: {self.player_2._state}")
-                print(f"Distance 1 and 2: {self.player_2._position - self.player_1._position}")
-                print(f"Obstacles: {str(self.env._obstacles)}")
-                game_stats = True
+            # if not game_stats and characters_shown:
+            #     print("\n",f"P1 => Distance: {self.player_1._position} | State: {self.player_1._state}")
+            #     print(f"P2 => Distance: {self.player_2._position} | State: {self.player_2._state}")
+            #     print(f"Distance 1 and 2: {self.player_2._position - self.player_1._position}")
+            #     print(f"Obstacles: {str(self.env._obstacles)}")
+            #     game_stats = True
 
     # collision detection
     def can_move(self,player, move):
@@ -253,6 +258,8 @@ class scene:
         self.frames_shown = 0
         self.player_1._state = "REST"
         self.player_2._state = "REST"
+        Thread(target=self.sound.play_sound, args=("POINT_ADDED", )).start()
+
 
     #check if on player touch another upon attacking
     def check_touched(self, player_num):

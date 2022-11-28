@@ -1,12 +1,12 @@
 [
     {
-        "LEFT": "",
-        "RIGHT": "",
-        "JUMP_LEFT": "",
-        "JUMP_RIGHT": "",
+        "LEFT": "jump.wav",
+        "RIGHT": "jump.wav",
+        "JUMP": "jump.wav",
         "BLOCK": "",
-        "ATTACK": "",
+        "ATTACK": "attack.wav",
         "HIT_OPPONENT": "",
-        "HIT_OBSTACLES": ""
+        "HIT_OBSTACLES": "obstacles.wav",
+        "POINT_ADDED": "point_added.wav"
     }
 ]
