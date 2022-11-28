@@ -22,9 +22,8 @@ class sound():
         file = "./ressources/sound_effect/" + self.mapping[action]
         if os.path.exists(file):
             try:
-                mixer.music.load(file)
-                mixer.music.set_volume(0.9)
-                mixer.music.play()
+                sound_effect = mixer.Sound(file)
+                sound_effect.play()
                 time.sleep(3)
             except Exception as e:
                 print("there is an issue")
