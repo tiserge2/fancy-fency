@@ -24,7 +24,6 @@ class server():
     def start_server(self):
         Timer(1, self.start_server).start()
         try:
-            print("trying to bind")
             self.server_sock.bind(self.address)
             self.server_sock.listen(1)
             print(f"Server listening on: {self.ip}:{self.port}")

@@ -17,10 +17,9 @@ class scene:
         self.win_height = 0
         self.message_show = False
         self.frame = env._frame
-        self.showing = True
+        self.showing = False
         self.timer = None
         self.sound = sound()
-        # self.draw_scene()
 
     # initialise the scene drawing and control the framing
     def draw_scene(self):
