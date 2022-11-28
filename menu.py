@@ -164,7 +164,7 @@ class menu:
     # different menu switcher
     def quit_actual_game(self, option):
         if option == 1:
-            path = "./saved_games/all_games.json"
+            path = "./ressources/saved_games/all_games.json"
             actual_game = {
                 "date": str(datetime.now()),
                 "player_1": {
@@ -252,6 +252,7 @@ class menu:
         joueur_1.connect((ip, 55555))
 
         if joueur_1.status == "CONNECTED":
+            print("connected")
             joueur_1.send(json.dumps({'type':'INVITE','message': 'INIT'}))
             
             if joueur_1.status == "SENT":
@@ -276,7 +277,7 @@ class menu:
             self.game_type()
 
     def load_games(self):
-        path = "./saved_games/all_games.json"
+        path = "./ressources/saved_games/all_games.json"
 
         if(os.path.exists(path)): 
             f = open(path)
@@ -297,7 +298,7 @@ class menu:
             exit()
 
     def load_default_conf(self):
-        path = "./conf/default_conf.json"
+        path = "./ressources/conf/default_conf.json"
 
         if(os.path.exists(path)): 
             f = open(path)
@@ -306,11 +307,11 @@ class menu:
             
             return data[0]
 
-    # load all the scenes from ./all_scenes folder
+    # load all the scenes from ./ressources/all_scenes folder
     def load_all_scenes(self):
         print("loading all the scenes")
         # path to all env
-        path = "./all_env"
+        path = "./ressources/all_env"
         scenes = []
 
         for root, dirs, files in os.walk(path):

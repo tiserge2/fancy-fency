@@ -69,6 +69,6 @@ class env():
         else:
             return False
 
-# path = "./all_env/env1.ffscene"
+# path = "./ressources/all_env/env1.ffscene"
 # env1 = env(path)
 # print(env1.is_correct)

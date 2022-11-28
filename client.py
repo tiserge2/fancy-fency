@@ -6,7 +6,6 @@ class client():
         self.port = 55555
         self.client_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.status = "INIT"
-        print(self.ip)
 
     def get_ip(self):
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -17,6 +16,7 @@ class client():
 
     def connect(self, server_address):
         try:
+            print("server add:", server_address)
             self.client_sock.connect(server_address)
             self.status = "CONNECTED"
         except socket.error as e:

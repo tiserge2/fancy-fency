@@ -475,7 +475,7 @@ class scene:
         return final_characters
 
 
-path = "./all_env/env1.ffscene"
+path = "./ressources/all_env/env1.ffscene"
 env1 = env(path)
 player_1 = player(position = env1._p_1_position, def_range = 4, att_range = 10, block_time = 2, mvt_speed = 0.5, att_speed = 6)
 player_2 = player(position = env1._p_2_position, def_range = 2, att_range = 8, block_time = 2, mvt_speed = 0.5, att_speed = 6)
