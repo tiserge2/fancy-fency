@@ -309,6 +309,7 @@ class menu:
                 while n != 0:
                     time.sleep(5)
                     data = joueur_1.client_sock.recv(2048).decode()
+                    print("received: ", data)
                     if data != "":
                         data = json.loads(joueur_1.client_sock.recv(2048).decode())
                         self.player_responded = True
