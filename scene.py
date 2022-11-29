@@ -96,7 +96,8 @@ class scene:
 
     def receive_client_input(self, server):
         Timer(0.2, self.receive_client_input, args=(server, )).start()
-        print("receivce client input")
+        print("receive client input")
+        print(server.client_address)
         client_key = server.client_connected.recv(1024).decode
         print(client_key)
         # similate a button touch here with pynput
@@ -107,7 +108,7 @@ class scene:
 
     def receive_server_input(self, joueur_1):
         Timer(0.2, self.receive_server_input, args=(joueur_1, )).start()
-        print("receivce server input")
+        print("receive server input")
         server_key = joueur_1.client_sock.recv(1024).decode
         print(server_key)
         server_key = json.loads(server_key)['key']
@@ -133,7 +134,7 @@ class scene:
         if self.showing:
             #here we will send the data if the game is being played online
             if self.online:
-                print("going to send iput now")
+                print("going to send input now")
                 if self.type_of_player == 'client':
                     self.send_client_input(self.client, key)
                 else:
