@@ -26,6 +26,7 @@ class scene:
         self.showing = False
         self.timer = None
         self.sound = sound()
+        self.from_virtual_key = False
 
     # initialise the scene drawing and control the framing
     def draw_scene(self):
@@ -96,13 +97,14 @@ class scene:
 
     def receive_client_input(self, server):
         while True:
-            print("receive client input")
-            print(server.client_address)
+            # print("receive client input")
+            # print(server.client_address)
             client_key = server.client_connected.recv(1024).decode()
-            print(client_key)
+            # print(client_key)
             # similate a button touch here with pynput
             client_key = json.loads(client_key)['key']
             keyboard = Controller()
+            self.from_virtual_key = True
             if client_key == "right":
                 keyboard.press(Key.right)
                 keyboard.release(Key.right)
@@ -112,16 +114,19 @@ class scene:
             elif client_key in ['a', 's', 'd', 'q', 'w', 'e', 'k', 'l', ',', '.']:
                 keyboard.press(client_key)
                 keyboard.release(client_key)
+            self.from_virtual_key = False
 
 
     def receive_server_input(self, joueur_1):
         while True:
-            print("receive server input")
+            # print("receive server input")
             server_key = joueur_1.client_sock.recv(1024).decode()
-            print(server_key)
+            # print(server_key)
             server_key = json.loads(server_key)['key']
+            # print(server_key)
             # similate a button touch here with pynput
             keyboard = Controller()
+            self.from_virtual_key = True
             if server_key == "right":
                 keyboard.press(Key.right)
                 keyboard.release(Key.right)
@@ -131,13 +136,14 @@ class scene:
             elif server_key in ['a', 's', 'd', 'q', 'w', 'e', 'k', 'l', ',', '.']:
                 keyboard.press(server_key)
                 keyboard.release(server_key)
+            self.from_virtual_key = False
 
     def send_client_input(self, joueur_1, key):
-        print("send client")
+        # print("send client")
         joueur_1.send(json.dumps({'type': 'GAME', 'key': key}))
 
     def send_server_input(self, server, key):
-        print("send client")
+        # print("send client")
         server.send(json.dumps({'type': 'GAME', 'key': key}))
 
     # control the user input when the game is playing
@@ -235,7 +241,61 @@ class scene:
                     # player 1 jumping left
                     if self.can_move(1, "JUMP_LEFT") and self.player_1._moving == False and self.player_1._jumping == False:
                         Thread(target=self.handle_jump, args=(self.player_1, "LEFT")).start()
-            else:
+            elif self.online and  self.type_of_player == 'server':
+                # ============> second player command
+                if button == "left":
+                    # move player 2 to the left if possible
+                    if self.can_move(2, "LEFT") and self.player_2._moving == False:
+                        Thread(target=self.init_action, args=(self.player_2, "LEFT")).start()
+                elif button == "right":
+                    # move player 2 to the right if possible
+                    if self.can_move(2, "RIGHT") and self.player_2._moving == False:
+                        Thread(target=self.init_action, args=(self.player_2, "RIGHT")).start()
+                elif button == "k":
+                    # player 2 defending
+                    if self.player_2._state == "REST":
+                        self.player_2._state = "BLOCK"
+                        Thread(target=self.reinit_player, args=(self.player_2, self.player_2._block_time)).start()
+                elif button == "l" and self.player_1._attacking == False:
+                    # player 2 attacking
+                    if self.player_2._state == "REST":
+                        Thread(target=self.init_action, args=(self.player_2, "ATTACK", 2)).start()
+                elif button == ".":
+                    # player 2 jumping right
+                    if self.can_move(2, "JUMP_RIGHT") and self.player_2._moving == False and self.player_2._jumping == False:
+                        Thread(target=self.handle_jump, args=(self.player_2, "RIGHT")).start()
+                elif button == ",":
+                    # player 2 jumping left
+                    if self.can_move(2, "JUMP_LEFT") and self.player_2._moving == False and self.player_2._jumping == False:
+                        Thread(target=self.handle_jump, args=(self.player_2, "LEFT")).start()
+            elif self.online and self.type_of_player == 'server' and self.from_virtual_key:
+                # ============> first player command
+                if button == "a" :
+                    # move player 1 to the the left if possible
+                    if self.can_move(1, "LEFT") and self.player_1._moving == False:
+                        Thread(target=self.init_action, args=(self.player_1, "LEFT")).start()
+                elif button == "d":
+                    # move player 1 to the right if possible
+                    if self.can_move(1, "RIGHT") and self.player_1._moving == False:
+                        Thread(target=self.init_action, args=(self.player_1, "RIGHT")).start()
+                elif button == "s":
+                    # player 1 blocking
+                    if self.player_1._state == "REST":
+                        self.player_1._state = "BLOCK"
+                        Thread(target=self.reinit_player, args=(self.player_1, self.player_2._block_time)).start()
+                elif button == "w":
+                    # player 1 attacking
+                    if self.player_1._state == "REST" and self.player_1._attacking == False:
+                        Thread(target=self.init_action, args=(self.player_1, "ATTACK", 1)).start()
+                elif button == "e":
+                    # player 1 jumping right
+                    if self.can_move(1, "JUMP_RIGHT") and self.player_1._moving == False and self.player_1._jumping == False:
+                        Thread(target=self.handle_jump, args=(self.player_1, "RIGHT")).start()
+                elif button == "q":
+                    # player 1 jumping left
+                    if self.can_move(1, "JUMP_LEFT") and self.player_1._moving == False and self.player_1._jumping == False:
+                        Thread(target=self.handle_jump, args=(self.player_1, "LEFT")).start()
+            elif self.online and  self.type_of_player == 'client' and self.from_virtual_key:
                 # ============> second player command
                 if button == "left":
                     # move player 2 to the left if possible

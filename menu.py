@@ -406,7 +406,7 @@ class menu:
                 self.scene_.online = True
                 self.scene_.server = self.server
                 self.scene_.client = self.joueur_1
-            # self.scene_.draw_scene()
+            self.scene_.draw_scene()
             self.scene_.showing = True
             self.keyboard_listener = keyboard.Listener(on_press = self.handle_game_pause)
             self.keyboard_listener.start()
@@ -463,13 +463,13 @@ class menu:
         self.online_game = True
         self.start_game(1)
         if type == 'client':
-            print("# receive data (server)player 2")
+            # print("# receive data (server)player 2")
             self.scene_.type_of_player = 'client'
             # self.scene_.receive_server_input(self.joueur_1)
             Thread(target = self.scene_.receive_server_input, args=(self.joueur_1, )).start()
         else:
             # receive data of (client)player 2 to (server)player 1
-            print("# send data of (client)player 1")
+            # print("# send data of (client)player 1")
             self.scene_.type_of_player = 'server'
             # self.scene_.receive_client_input(self.server)
             Thread(target = self.scene_.receive_client_input, args=(self.server, )).start()
