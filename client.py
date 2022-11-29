@@ -40,7 +40,3 @@ class client():
             self.status = "FAILED"
             print(e)
         
-# cli = client()
-# server_address = ("192.168.125.221", 55555)
-# connection = cli.connect(server_address)
-# print(cli.send("Hello Sergio"))

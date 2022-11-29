@@ -1,13 +1,19 @@
 from threading import Timer, Thread
 import os
 from pynput import keyboard
+from pynput.keyboard import Key, Controller
 from player import player 
 import time
 from environement import env
 from sound import sound
+import json
 
 class scene:
-    def __init__(self, player1, player2, env):
+    def __init__(self, player1, player2, env, online=False, type_of_player='client', server=None, client=None):
+        self.online = online
+        self.type_of_player = type_of_player
+        self.server = server
+        self.client = client
         self.player_1 = player1
         self.player_2 = player2
         self.env = env
@@ -88,6 +94,37 @@ class scene:
         time.sleep(delay)
         player._jumping = False
 
+    def receive_client_input(self, server):
+        Timer(0.2, self.receive_client_input, args=(server, )).start()
+        print("receiving client")
+        client_key = server.client_connected.recv(1024).decode
+        print(client_key)
+        # similate a button touch here with pynput
+        client_key = json.loads(client_key)['key']
+        keyboard = Controller()
+        keyboard.press(client_key)
+        keyboard.release(client_key)
+
+    def receive_server_input(self, joueur_1):
+        Timer(0.2, self.receive_server_input, args=(joueur_1, )).start()
+        print("receiving server")
+        server_key = joueur_1.client_sock.recv(1024).decode
+        print(server_key)
+        server_key = json.loads(server_key)['key']
+        # similate a button touch here with pynput
+        keyboard = Controller()
+        keyboard.press(server_key)
+        keyboard.release(server_key)
+
+    def send_client_input(self, joueur_1, key):
+        Timer(0.2, self.send_client_input, args=(joueur_1, key)).start()
+        print("send client")
+        joueur_1.send({'type': 'GAME', 'key': key})
+
+    def send_server_input(self, server, key):
+        Timer(0.2, self.send_server_input, args=(server, key)).start()
+        server.send({'type': 'GAME', 'key': key})
+
     # control the user input when the game is playing
     def handle_input(self, key):
         try:
@@ -95,59 +132,120 @@ class scene:
         except Exception as e:
             button = key.name
         if self.showing:
-            # ============> first player command
-            if button == "a" :
-                # move player 1 to the the left if possible
-                if self.can_move(1, "LEFT") and self.player_1._moving == False:
-                    Thread(target=self.init_action, args=(self.player_1, "LEFT")).start()
-            elif button == "d":
-                # move player 1 to the right if possible
-                if self.can_move(1, "RIGHT") and self.player_1._moving == False:
-                    Thread(target=self.init_action, args=(self.player_1, "RIGHT")).start()
-            elif button == "s":
-                # player 1 blocking
-                if self.player_1._state == "REST":
-                    self.player_1._state = "BLOCK"
-                    Thread(target=self.reinit_player, args=(self.player_1, self.player_2._block_time)).start()
-            elif button == "w":
-                # player 1 attacking
-                if self.player_1._state == "REST" and self.player_1._attacking == False:
-                    Thread(target=self.init_action, args=(self.player_1, "ATTACK", 1)).start()
-            elif button == "e":
-                # player 1 jumping right
-                if self.can_move(1, "JUMP_RIGHT") and self.player_1._moving == False and self.player_1._jumping == False:
-                    Thread(target=self.handle_jump, args=(self.player_1, "RIGHT")).start()
-            elif button == "q":
-                # player 1 jumping left
-                if self.can_move(1, "JUMP_LEFT") and self.player_1._moving == False and self.player_1._jumping == False:
-                    Thread(target=self.handle_jump, args=(self.player_1, "LEFT")).start()
-            # ============> second player command
-            elif button == "left":
-                # move player 2 to the left if possible
-                if self.can_move(2, "LEFT") and self.player_2._moving == False:
-                    Thread(target=self.init_action, args=(self.player_2, "LEFT")).start()
-            elif button == "right":
-                # move player 2 to the right if possible
-                if self.can_move(2, "RIGHT") and self.player_2._moving == False:
-                    Thread(target=self.init_action, args=(self.player_2, "RIGHT")).start()
-            elif button == "k":
-                # player 2 defending
-                if self.player_2._state == "REST":
-                    self.player_2._state = "BLOCK"
-                    Thread(target=self.reinit_player, args=(self.player_2, self.player_2._block_time)).start()
-            elif button == "l" and self.player_1._attacking == False:
-                # player 2 attacking
-                if self.player_2._state == "REST":
-                    Thread(target=self.init_action, args=(self.player_2, "ATTACK", 2)).start()
-            elif button == ".":
-                # player 2 jumping right
-                if self.can_move(2, "JUMP_RIGHT") and self.player_2._moving == False and self.player_2._jumping == False:
-                    Thread(target=self.handle_jump, args=(self.player_2, "RIGHT")).start()
-            elif button == ",":
-                # player 2 jumping left
-                if self.can_move(2, "JUMP_LEFT") and self.player_2._moving == False and self.player_2._jumping == False:
-                    Thread(target=self.handle_jump, args=(self.player_2, "LEFT")).start()
+            #here we will send the data if the game is being played online
+            if self.online:
+                if self.type_of_player == 'client':
+                    self.send_client_input(self.client, key)
+                else:
+                    self.send_server_input(self.server, key)
 
+            if not self.online:        
+                # ============> first player command
+                if button == "a" :
+                    # move player 1 to the the left if possible
+                    if self.can_move(1, "LEFT") and self.player_1._moving == False:
+                        Thread(target=self.init_action, args=(self.player_1, "LEFT")).start()
+                elif button == "d":
+                    # move player 1 to the right if possible
+                    if self.can_move(1, "RIGHT") and self.player_1._moving == False:
+                        Thread(target=self.init_action, args=(self.player_1, "RIGHT")).start()
+                elif button == "s":
+                    # player 1 blocking
+                    if self.player_1._state == "REST":
+                        self.player_1._state = "BLOCK"
+                        Thread(target=self.reinit_player, args=(self.player_1, self.player_2._block_time)).start()
+                elif button == "w":
+                    # player 1 attacking
+                    if self.player_1._state == "REST" and self.player_1._attacking == False:
+                        Thread(target=self.init_action, args=(self.player_1, "ATTACK", 1)).start()
+                elif button == "e":
+                    # player 1 jumping right
+                    if self.can_move(1, "JUMP_RIGHT") and self.player_1._moving == False and self.player_1._jumping == False:
+                        Thread(target=self.handle_jump, args=(self.player_1, "RIGHT")).start()
+                elif button == "q":
+                    # player 1 jumping left
+                    if self.can_move(1, "JUMP_LEFT") and self.player_1._moving == False and self.player_1._jumping == False:
+                        Thread(target=self.handle_jump, args=(self.player_1, "LEFT")).start()
+                # ============> second player command
+                elif button == "left":
+                    # move player 2 to the left if possible
+                    if self.can_move(2, "LEFT") and self.player_2._moving == False:
+                        Thread(target=self.init_action, args=(self.player_2, "LEFT")).start()
+                elif button == "right":
+                    # move player 2 to the right if possible
+                    if self.can_move(2, "RIGHT") and self.player_2._moving == False:
+                        Thread(target=self.init_action, args=(self.player_2, "RIGHT")).start()
+                elif button == "k":
+                    # player 2 defending
+                    if self.player_2._state == "REST":
+                        self.player_2._state = "BLOCK"
+                        Thread(target=self.reinit_player, args=(self.player_2, self.player_2._block_time)).start()
+                elif button == "l" and self.player_1._attacking == False:
+                    # player 2 attacking
+                    if self.player_2._state == "REST":
+                        Thread(target=self.init_action, args=(self.player_2, "ATTACK", 2)).start()
+                elif button == ".":
+                    # player 2 jumping right
+                    if self.can_move(2, "JUMP_RIGHT") and self.player_2._moving == False and self.player_2._jumping == False:
+                        Thread(target=self.handle_jump, args=(self.player_2, "RIGHT")).start()
+                elif button == ",":
+                    # player 2 jumping left
+                    if self.can_move(2, "JUMP_LEFT") and self.player_2._moving == False and self.player_2._jumping == False:
+                        Thread(target=self.handle_jump, args=(self.player_2, "LEFT")).start()
+            elif self.online and self.type_of_player == 'client':
+                # ============> first player command
+                if button == "a" :
+                    # move player 1 to the the left if possible
+                    if self.can_move(1, "LEFT") and self.player_1._moving == False:
+                        Thread(target=self.init_action, args=(self.player_1, "LEFT")).start()
+                elif button == "d":
+                    # move player 1 to the right if possible
+                    if self.can_move(1, "RIGHT") and self.player_1._moving == False:
+                        Thread(target=self.init_action, args=(self.player_1, "RIGHT")).start()
+                elif button == "s":
+                    # player 1 blocking
+                    if self.player_1._state == "REST":
+                        self.player_1._state = "BLOCK"
+                        Thread(target=self.reinit_player, args=(self.player_1, self.player_2._block_time)).start()
+                elif button == "w":
+                    # player 1 attacking
+                    if self.player_1._state == "REST" and self.player_1._attacking == False:
+                        Thread(target=self.init_action, args=(self.player_1, "ATTACK", 1)).start()
+                elif button == "e":
+                    # player 1 jumping right
+                    if self.can_move(1, "JUMP_RIGHT") and self.player_1._moving == False and self.player_1._jumping == False:
+                        Thread(target=self.handle_jump, args=(self.player_1, "RIGHT")).start()
+                elif button == "q":
+                    # player 1 jumping left
+                    if self.can_move(1, "JUMP_LEFT") and self.player_1._moving == False and self.player_1._jumping == False:
+                        Thread(target=self.handle_jump, args=(self.player_1, "LEFT")).start()
+            else:
+                # ============> second player command
+                if button == "left":
+                    # move player 2 to the left if possible
+                    if self.can_move(2, "LEFT") and self.player_2._moving == False:
+                        Thread(target=self.init_action, args=(self.player_2, "LEFT")).start()
+                elif button == "right":
+                    # move player 2 to the right if possible
+                    if self.can_move(2, "RIGHT") and self.player_2._moving == False:
+                        Thread(target=self.init_action, args=(self.player_2, "RIGHT")).start()
+                elif button == "k":
+                    # player 2 defending
+                    if self.player_2._state == "REST":
+                        self.player_2._state = "BLOCK"
+                        Thread(target=self.reinit_player, args=(self.player_2, self.player_2._block_time)).start()
+                elif button == "l" and self.player_1._attacking == False:
+                    # player 2 attacking
+                    if self.player_2._state == "REST":
+                        Thread(target=self.init_action, args=(self.player_2, "ATTACK", 2)).start()
+                elif button == ".":
+                    # player 2 jumping right
+                    if self.can_move(2, "JUMP_RIGHT") and self.player_2._moving == False and self.player_2._jumping == False:
+                        Thread(target=self.handle_jump, args=(self.player_2, "RIGHT")).start()
+                elif button == ",":
+                    # player 2 jumping left
+                    if self.can_move(2, "JUMP_LEFT") and self.player_2._moving == False and self.player_2._jumping == False:
+                        Thread(target=self.handle_jump, args=(self.player_2, "LEFT")).start()
         
     # draw everything related to the game being played
     def draw_whole_env(self):

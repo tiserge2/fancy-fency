@@ -9,3 +9,4 @@ https://stackoverflow.com/questions/47316777/calculate-broadcast-by-ip-and-mask
 https://stackoverflow.com/questions/5284147/validating-ipv4-addresses-with-regexp
 https://www.geeksforgeeks.org/python-playing-audio-file-in-pygame/
 https://stackoverflow.com/questions/42047253/how-to-detect-current-keyboard-language-in-python
+folkstalk.com/tech/how-to-simulate-keyboard-input-in-python-with-code-examples/

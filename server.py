@@ -32,11 +32,9 @@ class server():
             data = self.client_connected.recv(2048).decode("utf-8")
             if not data:
                 print("====> Disconnected.. ")
-                a = 1
             else:
-                a = 1
-                print("====> Reading data.. ")
                 self.process_data(data)
+
         except socket.error as e:
             str(e)
 
@@ -51,7 +49,6 @@ class server():
 
     def process_data(self, data):
         received_data = json.loads(data)
-        print("Data: ", received_data)
         self.received_data = received_data
 
 
@@ -60,7 +57,7 @@ class server():
         elif received_data['type'] == "INVITE" and received_data['message'] != 'INIT':
             self.server_state = "NEW_RESPONSE"
         elif received_data['type'] == "GAME":
-            print("receiving game data")
+            self.server_state = "GAME"
             
 
 if __name__ == "__main__":

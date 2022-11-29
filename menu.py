@@ -23,6 +23,8 @@ class menu:
         self.scene_created = False
         self.player_responded = False
         self.server = server()
+        self.joueur_1 = client()
+        self.online_game = False
         Thread(target=self.main_menu).start()
         self.server.start_server()
 
@@ -261,7 +263,8 @@ class menu:
             self.server.send(json.dumps({'type':'INVITE', 'message':'YES'}))
             if self.server.status == 'SENT':
                 print("Response sent successfully.")
-                # here we will lauch the game for player 2
+                # here we will launch the game for player 2
+                self.start_online_game("server")
             else:
                 print("Failed to send response.")
                 time.sleep(2)
@@ -295,31 +298,23 @@ class menu:
         self.send_invite(address)
 
     def send_invite(self, address):
-        print("sending invite")
-        joueur_1 = client()
-        joueur_1.connect((address.split(":")[0], int(address.split(":")[1])))
+        print("Sending invite")
+        self.joueur_1.connect((address.split(":")[0], int(address.split(":")[1])))
 
-        if joueur_1.status == "CONNECTED":
-            print("connected")
-            joueur_1.send(json.dumps({'type':'INVITE','message': 'INIT'}))
+        if self.joueur_1.status == "CONNECTED":
+            self.joueur_1.send(json.dumps({'type':'INVITE','message': 'INIT'}))
             
-            if joueur_1.status == "SENT":
+            if self.joueur_1.status == "SENT":
                 print("Invite sent to player, waiting for answer...")
-                n = 100
-                while n != 0:
-                    print(n)
-                    time.sleep(5)
-                    data = joueur_1.client_sock.recv(2048).decode()
-                    print("received: ", data)
-                    try:
-                        data = json.loads(joueur_1.client_sock.recv(2048).decode())
-                        self.player_responded = True
-                        response = data['message']
-                        break
-                    except Exception as e:
-                        print("Waiting for player to respond...")
-                        n -= 1
-                
+
+                try:
+                    data = self.joueur_1.client_sock.recv(2048).decode()
+                    data = json.loads(data)
+                    self.player_responded = True
+                    response = data['message']
+                except Exception as e:
+                    response = "NO"
+
                 if not self.player_responded:
                     print("No response from sent invitation...")
                     time.sleep(3)
@@ -327,8 +322,9 @@ class menu:
                 else:
                     print("Checking player response...")
                     if response == "YES":
-                        print("Invite was accepted")
+                        print("Invite was accepted.")
                         # here we start the game for player 1
+                        self.start_online_game("client")
                     else:
                         print("Invite was refused.")
                         time.sleep(3)
@@ -457,5 +453,18 @@ class menu:
         if button == "y":
             # self.scene_.frame = 0.05
             self.scene_.showing = True
+
+    def start_online_game(self, type):
+        print("starting")
+        self.online_game = True
+        # self.start_game(1)
+        if type == 'client':
+            print("# receive data (server)player 2")
+            self.scene_.receive_server_input()
+        else:
+            # receive data of (server)player 2 to (server)player 1
+            print("# send data of (server)player 1")
+            self.scene_.receive_client_input()
+
 
 menu_ = menu()
