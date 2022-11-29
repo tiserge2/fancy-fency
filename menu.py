@@ -268,7 +268,7 @@ class menu:
                 self.game_type()
         else:
             print("refusing")
-            self.server.send(json.dump({'type':'INVITE', 'message':'NO'}))
+            self.server.send(json.dumps({'type':'INVITE', 'message':'NO'}))
             if self.server.status == 'SENT':
                 print("Response sent successfully.")
             else:
