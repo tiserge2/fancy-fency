@@ -26,8 +26,7 @@ class client():
 
     def send(self, data):
         try:
-            self.response = self.client_sock.send(str.encode(data))
-            print(self.response)
+            self.client_sock.send(str.encode(data))
             self.status = "SENT"
         except socket.error as e:
             self.status = "FAILED"

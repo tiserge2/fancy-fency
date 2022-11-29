@@ -303,13 +303,10 @@ class menu:
             
             if joueur_1.status == "SENT":
                 print("Invite sent to player, waiting for answer...")
-                joueur_1.disconnect()
                 n = 10
                 while n != 0:
                     time.sleep(12)
-                    if self.server.server_state == "NEW_RESPONSE":
-                        self.player_responded = True
-                        break
+                    print("response: ", joueur_1.client_sock.recv(2048).decode())
 
                     print("Waiting for player to respond...")
                     n -= 1
