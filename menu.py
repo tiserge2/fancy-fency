@@ -271,10 +271,11 @@ class menu:
             self.server.send(json.dumps({'type':'INVITE', 'message':'NO'}))
             if self.server.status == 'SENT':
                 print("Response sent successfully.")
+                time.sleep(3)
                 self.main_menu()
             else:
                 print("!! Failed to send response.")
-            time.sleep(2)
+            time.sleep(3)
             self.game_type()
 
     # search for players over the network
