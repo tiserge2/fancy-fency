@@ -393,6 +393,10 @@ class menu:
         else:
             env_selected = self.scenes[choice - 1]
             env_selected._frame = self.def_conf["game"]["frame"]
+            
+            if self.online_game:
+                env_selected.online = True
+
             player_1 = player(position = env_selected._p_1_position, def_range = self.def_conf["player_1"]["def_range"], 
                             att_range = self.def_conf["player_1"]["att_range"], block_time = self.def_conf["player_1"]["block_time"], 
                             mvt_speed = self.def_conf["player_1"]["mvt_speed"], att_speed = self.def_conf["player_1"]["att_speed"])
