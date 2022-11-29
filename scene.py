@@ -103,8 +103,16 @@ class scene:
             # similate a button touch here with pynput
             client_key = json.loads(client_key)['key']
             keyboard = Controller()
-            keyboard.press(client_key)
-            keyboard.release(client_key)
+            if client_key == "right":
+                keyboard.press(Key.right)
+                keyboard.release(Key.right)
+            elif client_key == "left":
+                keyboard.press(Key.left)
+                keyboard.release(Key.left)
+            elif client_key in ['a', 's', 'd', 'q', 'w', 'e', 'k', 'l', ',', '.']:
+                keyboard.press(client_key)
+                keyboard.release(client_key)
+
 
     def receive_server_input(self, joueur_1):
         while True:
