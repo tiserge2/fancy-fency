@@ -30,6 +30,14 @@ class client():
         except socket.error as e:
             self.status = "FAILED"
             print(e)
+
+    def disconnect(self):
+        try:
+            self.client_sock.close()
+            self.status = "INIT"
+        except socket.error as e:
+            self.status = "FAILED"
+            print(e)
         
 # cli = client()
 # server_address = ("192.168.125.221", 55555)

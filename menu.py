@@ -309,6 +309,7 @@ class menu:
             
             if joueur_1.status == "SENT":
                 print("Invite sent to player, waiting for answer...")
+                joueur_1.disconnect()
                 n = 10
                 while n != 0:
                     time.sleep(12)
