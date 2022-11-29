@@ -136,9 +136,9 @@ class scene:
             if self.online:
                 print("going to send input now")
                 if self.type_of_player == 'client':
-                    self.send_client_input(self.client, key)
+                    self.send_client_input(self.client, button)
                 else:
-                    self.send_server_input(self.server, key)
+                    self.send_server_input(self.server, button)
 
             if not self.online:        
                 # ============> first player command
