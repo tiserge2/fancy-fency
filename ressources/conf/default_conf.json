@@ -15,7 +15,7 @@
             "att_speed": 6
         },
         "game": {
-            "frame": 10
+            "frame": 0.1
         }
     }
 ]
