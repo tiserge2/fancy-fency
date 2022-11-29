@@ -466,8 +466,8 @@ class menu:
             self.scene_.type_of_player = 'client'
             self.scene_.receive_server_input(self.joueur_1)
         else:
-            # receive data of (server)player 2 to (server)player 1
-            print("# send data of (server)player 1")
+            # receive data of (client)player 2 to (server)player 1
+            print("# send data of (client)player 1")
             self.scene_.type_of_player = 'client'
             self.scene_.receive_client_input(self.server)
 
