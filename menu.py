@@ -405,7 +405,7 @@ class menu:
                             mvt_speed = self.def_conf["player_2"]["mvt_speed"], att_speed = self.def_conf["player_2"]["att_speed"])
             self.scene_ = scene(player_1, player_2, env_selected)
             self.scene_created = True
-            self.scene_.draw_scene()
+            # self.scene_.draw_scene()
             self.scene_.showing = True
             self.keyboard_listener = keyboard.Listener(on_press = self.handle_game_pause)
             self.keyboard_listener.start()

@@ -121,6 +121,7 @@ class scene:
 
     def send_server_input(self, server, key):
         Timer(0.2, self.send_server_input, args=(server, key)).start()
+        print("send client")
         server.send({'type': 'GAME', 'key': key})
 
     # control the user input when the game is playing
