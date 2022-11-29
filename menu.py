@@ -464,12 +464,15 @@ class menu:
         if type == 'client':
             print("# receive data (server)player 2")
             self.scene_.type_of_player = 'client'
-            self.scene_.receive_server_input(self.joueur_1)
+            # self.scene_.receive_server_input(self.joueur_1)
+            Thread(target = self.scene_.receive_server_input, args=(self.joueur_1, )).start()
         else:
             # receive data of (client)player 2 to (server)player 1
             print("# send data of (client)player 1")
             self.scene_.type_of_player = 'server'
-            self.scene_.receive_client_input(self.server)
+            # self.scene_.receive_client_input(self.server)
+            Thread(target = self.scene_.receive_client_input, args=(self.server, )).start()
+
 
 
 menu_ = menu()

@@ -95,27 +95,27 @@ class scene:
         player._jumping = False
 
     def receive_client_input(self, server):
-        Timer(0.2, self.receive_client_input, args=(server, )).start()
-        print("receive client input")
-        print(server.client_address)
-        client_key = server.client_connected.recv(1024).decode
-        print(client_key)
-        # similate a button touch here with pynput
-        client_key = json.loads(client_key)['key']
-        keyboard = Controller()
-        keyboard.press(client_key)
-        keyboard.release(client_key)
+        while True:
+            print("receive client input")
+            print(server.client_address)
+            client_key = server.client_connected.recv(1024).decode
+            print(client_key)
+            # similate a button touch here with pynput
+            client_key = json.loads(client_key)['key']
+            keyboard = Controller()
+            keyboard.press(client_key)
+            keyboard.release(client_key)
 
     def receive_server_input(self, joueur_1):
-        Timer(0.2, self.receive_server_input, args=(joueur_1, )).start()
-        print("receive server input")
-        server_key = joueur_1.client_sock.recv(1024).decode
-        print(server_key)
-        server_key = json.loads(server_key)['key']
-        # similate a button touch here with pynput
-        keyboard = Controller()
-        keyboard.press(server_key)
-        keyboard.release(server_key)
+        while True:
+            print("receive server input")
+            server_key = joueur_1.client_sock.recv(1024).decode
+            print(server_key)
+            server_key = json.loads(server_key)['key']
+            # similate a button touch here with pynput
+            keyboard = Controller()
+            keyboard.press(server_key)
+            keyboard.release(server_key)
 
     def send_client_input(self, joueur_1, key):
         print("send client")
