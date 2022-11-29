@@ -303,10 +303,15 @@ class menu:
             
             if joueur_1.status == "SENT":
                 print("Invite sent to player, waiting for answer...")
-                n = 10
+                n = 100
                 while n != 0:
-                    time.sleep(12)
-                    print("response: ", joueur_1.client_sock.recv(2048).decode())
+                    time.sleep(5)
+                    data = json.loads(joueur_1.client_sock.recv(2048).decode())
+                    if data != "":
+                        print(data)
+                        self.player_responded = True
+                        response = data['message']
+
 
                     print("Waiting for player to respond...")
                     n -= 1
@@ -317,7 +322,7 @@ class menu:
                     self.game_type()
                 else:
                     print("Checking player response...")
-                    if self.server.received_data['message'] == "YES":
+                    if response == "YES":
                         print("Invite was accepted")
                         # here we start the game for player 1
                     else:
