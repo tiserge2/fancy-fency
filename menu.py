@@ -306,9 +306,9 @@ class menu:
                 n = 100
                 while n != 0:
                     time.sleep(5)
-                    data = json.loads(joueur_1.client_sock.recv(2048).decode())
+                    data = joueur_1.client_sock.recv(2048).decode()
                     if data != "":
-                        print(data)
+                        data = json.loads(joueur_1.client_sock.recv(2048).decode())
                         self.player_responded = True
                         response = data['message']
                         break
