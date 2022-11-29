@@ -459,7 +459,6 @@ class menu:
             self.scene_.showing = True
 
     def start_online_game(self, type):
-        print("starting")
         self.online_game = True
         self.start_game(1)
         if type == 'client':

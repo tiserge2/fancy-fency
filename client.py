@@ -17,7 +17,6 @@ class client():
 
     def connect(self, server_address):
         try:
-            print("server add:", server_address)
             self.client_sock.connect(server_address)
             self.status = "CONNECTED"
         except socket.error as e:
