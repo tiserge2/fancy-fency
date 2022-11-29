@@ -271,6 +271,7 @@ class menu:
             self.server.send(json.dumps({'type':'INVITE', 'message':'NO'}))
             if self.server.status == 'SENT':
                 print("Response sent successfully.")
+                self.main_menu()
             else:
                 print("!! Failed to send response.")
             time.sleep(2)
