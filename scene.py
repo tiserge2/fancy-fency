@@ -121,6 +121,7 @@ class scene:
             print(server_key)
             server_key = json.loads(server_key)['key']
             # similate a button touch here with pynput
+            keyboard = Controller()
             if server_key == "right":
                 keyboard.press(Key.right)
                 keyboard.release(Key.right)
