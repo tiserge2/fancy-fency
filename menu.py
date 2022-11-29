@@ -255,6 +255,7 @@ class menu:
 
     def online_game_type_switcher(self, option):
         client_ans = client()
+        print("responding to ", self.server.client_address)
         client_ans.connect(self.server.client_address)
 
         if client_ans.status == "CONNECTED":
