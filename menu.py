@@ -258,7 +258,7 @@ class menu:
 
         if option == 1:
             print("accepting")
-            self.server.send("{'type':'INVITE', 'message':'YES'}")
+            self.server.send(json.dumps({'type':'INVITE', 'message':'YES'}))
             if self.server.status == 'SENT':
                 print("Response sent successfully.")
                 # here we will lauch the game for player 2
@@ -268,7 +268,7 @@ class menu:
                 self.game_type()
         else:
             print("refusing")
-            self.server.send("{'type':'INVITE', 'message':'NO'}")
+            self.server.send(json.dump({'type':'INVITE', 'message':'NO'}))
             if self.server.status == 'SENT':
                 print("Response sent successfully.")
             else:
