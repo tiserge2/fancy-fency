@@ -255,7 +255,7 @@ class menu:
 
     def online_game_type_switcher(self, option):
         client_ans = client()
-        client_ans.connect(self.server.client_ans_address)
+        client_ans.connect(self.server.client_address)
 
         if client_ans.status == "CONNECTED":
             if option == 1:
@@ -309,9 +309,9 @@ class menu:
             
             if joueur_1.status == "SENT":
                 print("Invite sent to player, waiting for answer...")
-                n = 5
+                n = 10
                 while n != 0:
-                    time.sleep(3)
+                    time.sleep(12)
                     if self.server.server_state == "NEW_RESPONSE":
                         self.player_responded = True
                         break
