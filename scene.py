@@ -119,11 +119,11 @@ class scene:
 
     def send_client_input(self, joueur_1, key):
         print("send client")
-        joueur_1.send({'type': 'GAME', 'key': key})
+        joueur_1.send(json.dumps({'type': 'GAME', 'key': key}))
 
     def send_server_input(self, server, key):
         print("send client")
-        server.send({'type': 'GAME', 'key': key})
+        server.send(json.dumps({'type': 'GAME', 'key': key}))
 
     # control the user input when the game is playing
     def handle_input(self, key):
