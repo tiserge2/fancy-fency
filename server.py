@@ -31,11 +31,11 @@ class server():
             # print("Connected to", self.client_address)
             data = self.client_connected.recv(2048).decode("utf-8")
             if not data:
-                # print("====> Disconnected.. ")
+                print("====> Disconnected.. ")
                 a = 1
             else:
                 a = 1
-                # print("====> Reading data.. ")
+                print("====> Reading data.. ")
                 self.process_data(data)
         except socket.error as e:
             str(e)
