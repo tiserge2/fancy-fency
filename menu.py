@@ -310,15 +310,14 @@ class menu:
                     time.sleep(5)
                     data = joueur_1.client_sock.recv(2048).decode()
                     print("received: ", data)
-                    if data != "":
+                    try:
                         data = json.loads(joueur_1.client_sock.recv(2048).decode())
                         self.player_responded = True
                         response = data['message']
                         break
-
-
-                    print("Waiting for player to respond...")
-                    n -= 1
+                    except Exception as e:
+                        print("Waiting for player to respond...")
+                        n -= 1
                 
                 if not self.player_responded:
                     print("No response from sent invitation...")
