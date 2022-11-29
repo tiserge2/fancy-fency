@@ -6,7 +6,7 @@ from client import client
 class server():
     def __init__(self):
         self.ip = self.get_ip()[0]
-        self.port = self.get_ip[1]
+        self.port = self.get_ip()[1]
         self.address = (self.ip, self.port)
         self.server_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.client_connected = ""
