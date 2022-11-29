@@ -9,6 +9,7 @@ import json
 import re
 from client import client
 import time
+from server import server
 
 
 class menu:
@@ -18,11 +19,12 @@ class menu:
         self.def_conf = self.load_default_conf()
         self.loaded_game = self.load_games()
         self.scene_ = None
-        # Thread(target=self.main_menu).start()
         self.timer_1 = None
         self.scene_created = False
         self.player_responded = False
-        self.main_menu()
+        self.server = server()
+        Thread(target=self.main_menu).start()
+        self.server.start_server()
 
     def check_input_menu(self,inp, start, end):
         try:
@@ -47,6 +49,9 @@ class menu:
         os.system("clear")
         menu_text = "\n1- Start a new game\n2- Continue a saved game\n3- Quit\n\n"
 
+        if type(self.server) != str:
+            menu_text += f"Player Online Address: {self.server.address[0]}:{self.server.address[1]}\n\n"
+
         print(menu_text)
 
         self.flush_input()
@@ -62,20 +67,38 @@ class menu:
 
     def game_type(self):
         os.system("clear")
-        menu_text = "\n1- Local\n2- Online\n3- Back\n\n\n"
+        if self.server.server_state != "NEW_INVITE":
+            menu_text = "\n1- Local\n2- Online\n3- Back\n\n\n"
 
-        print(menu_text)
+            print(menu_text)
 
-        self.flush_input()
-        choice = input("Type your choice: ")
-
-        while not self.check_input_menu(choice, 1, 3)[0]:
-            error_message = self.check_input_menu(choice, 1, 3)[1]
-            print("\nError: ",error_message)
             self.flush_input()
-            choice = input("Type your choice: ") 
+            choice = input("Type your choice: ")
+
+            while not self.check_input_menu(choice, 1, 3)[0]:
+                error_message = self.check_input_menu(choice, 1, 3)[1]
+                print("\nError: ",error_message)
+                self.flush_input()
+                choice = input("Type your choice: ") 
         
-        self.game_type_switcher(int(choice))
+            self.game_type_switcher(int(choice))
+        else:
+            menu_text = "You've got a new invitation to play.\n\n\n"
+
+            menu_text += "\n1- Yes\n2- No\n\n\n"
+
+            print(menu_text)
+
+            self.flush_input()
+            choice = input("Type your choice: ")
+
+            while not self.check_input_menu(choice, 1, 2)[0]:
+                error_message = self.check_input_menu(choice, 1, 3)[1]
+                print("\nError: ",error_message)
+                self.flush_input()
+                choice = input("Type your choice: ") 
+        
+            self.online_game_type_switcher(int(choice))
 
     def choose_scene(self):
         os.system("clear")
@@ -230,6 +253,35 @@ class menu:
 
         switcher[option]()
 
+    def online_game_type_switcher(self, option):
+        client_ans = client()
+        client_ans.connect(self.server.client_ans_address)
+
+        if client_ans.status == "CONNECTED":
+            if option == 1:
+                print("accepting")
+                client_ans.send("{'type':'INVITE', 'message':'YES'}")
+                if client_ans.status == 'SENT':
+                    print("Response sent successfully.")
+                    # here we will lauch the game for player 2
+                else:
+                    print("Failed to send response.")
+                    time.sleep(2)
+                    self.game_type()
+            else:
+                print("refusing")
+                client_ans.send("{'type':'INVITE', 'message':'NO'}")
+                if client_ans.status == 'SENT':
+                    print("Response sent successfully.")
+                else:
+                    print("!! Failed to send response.")
+                time.sleep(2)
+                self.game_type()
+        else:
+            print("Cannot connect to this client, there is an issue.")
+            time.sleep(2)
+            self.game_type()
+
     # search for players over the network
     def launch_player_research(self):
         os.system("clear")
@@ -260,6 +312,10 @@ class menu:
                 n = 5
                 while n != 0:
                     time.sleep(3)
+                    if self.server.server_state == "NEW_RESPONSE":
+                        self.player_responded = True
+                        break
+
                     print("Waiting for player to respond...")
                     n -= 1
                 
@@ -267,6 +323,15 @@ class menu:
                     print("No response from sent invitation...")
                     time.sleep(3)
                     self.game_type()
+                else:
+                    print("Checking player response...")
+                    if self.server.received_data['message'] == "YES":
+                        print("Invite was accepted")
+                        # here we start the game for player 1
+                    else:
+                        print("Invite was refused.")
+                        time.sleep(3)
+                        self.game_type()
             else:
                 print("There is an error sending the invite to the player...")
                 time.sleep(3)

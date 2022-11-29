@@ -11,8 +11,8 @@ class server():
         self.server_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.client_connected = ""
         self.client_address = ""
-        self.status = ""
-        self.start_server()
+        self.server_state = ""
+        self.received_data = ""
 
     def get_ip(self):
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -26,40 +26,32 @@ class server():
         try:
             self.server_sock.bind(self.address)
             self.server_sock.listen(1)
-            print(f"Server listening on: {self.ip}:{self.port}")
+            # print(f"Server listening on: {self.ip}:{self.port}")
             self.client_connected, self.client_address = self.server_sock.accept()
-            print("Connected to", self.client_address)
+            # print("Connected to", self.client_address)
             data = self.client_connected.recv(2048).decode("utf-8")
             if not data:
-                print("====> Disconnected.. ")
+                # print("====> Disconnected.. ")
+                a = 1
             else:
-                print("====> Reading data.. ")
+                a = 1
+                # print("====> Reading data.. ")
                 self.process_data(data)
         except socket.error as e:
             str(e)
 
-    def search_online_player(self):
-        value_to_send = f"my addess is: {self.ip}/{self.port}"
-        dest = ('<broadcast>', 10100)
-        sock_broadcast = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        sock_broadcast.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
-        print("Searching for online player...")
-        sock_broadcast.sendto(value_to_send, dest)
-        while 1:
-            (buf,address) = sock_broadcast.recvfrom(10100)
-
-            if not len(buf):
-                break
-            print(f"received from {address}:{buf}")
-
     def process_data(self, data):
         received_data = json.loads(data)
         print("Data: ", received_data)
+        self.received_data = received_data
+
 
         if received_data['type'] == "INVITE" and received_data['message'] == 'INIT':
             self.server_state = "NEW_INVITE"
-        if received_data['type'] == "INVITE" and received_data['message'] == 'RESPONSE':
+        elif received_data['type'] == "INVITE" and received_data['message'] != 'INIT':
             self.server_state = "NEW_RESPONSE"
+        elif received_data['type'] == "GAME":
+            print("receiving game data")
             
 
-serv = server()
+# serv = server()
