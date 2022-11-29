@@ -307,6 +307,7 @@ class menu:
                 print("Invite sent to player, waiting for answer...")
                 n = 100
                 while n != 0:
+                    print(n)
                     time.sleep(5)
                     data = joueur_1.client_sock.recv(2048).decode()
                     print("received: ", data)
