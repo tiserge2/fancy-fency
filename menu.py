@@ -34,8 +34,8 @@ class menu:
         except Exception as e:
             return False, "Should be an integer"
 
-    def validate_ip_address(self, ip):
-        test = re.match(r"^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4}$", ip)
+    def validate_ip_address(self, address):
+        test = re.match(r"^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]):[0-9]+$", address)
 
         if not test:
             return False, "Ip Address is not correct."
@@ -235,21 +235,21 @@ class menu:
         os.system("clear")
 
         self.flush_input()
-        ip = input("IP Address:")
+        address = input("Player Address(IP:PORT): ")
 
-        while not self.validate_ip_address(ip)[0]:
-            error_message = self.validate_ip_address(ip)[1]
+        while not self.validate_ip_address(address)[0]:
+            error_message = self.validate_ip_address(address)[1]
             os.system("clear")
-            print("\nError: ",error_message)
+            print("Error: ",error_message)
             self.flush_input()
-            ip = input("IP Address:")
+            address = input("Player Address(IP:PORT): ")
         
-        self.send_invite(ip)
+        self.send_invite(address)
 
-    def send_invite(self, ip):
+    def send_invite(self, address):
         print("sending invite")
         joueur_1 = client()
-        joueur_1.connect((ip, 55555))
+        joueur_1.connect((address.split(":")[0], int(address.split(":")[1])))
 
         if joueur_1.status == "CONNECTED":
             print("connected")
