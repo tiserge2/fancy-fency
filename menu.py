@@ -393,7 +393,7 @@ class menu:
         else:
             env_selected = self.scenes[choice - 1]
             env_selected._frame = self.def_conf["game"]["frame"]
-            
+
             if self.online_game:
                 env_selected.online = True
 
@@ -464,10 +464,12 @@ class menu:
         self.start_game(1)
         if type == 'client':
             print("# receive data (server)player 2")
+            self.scene_.type_of_player = 'client'
             self.scene_.receive_server_input()
         else:
             # receive data of (server)player 2 to (server)player 1
             print("# send data of (server)player 1")
+            self.scene_.type_of_player = 'client'
             self.scene_.receive_client_input()
 
 
