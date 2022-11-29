@@ -25,8 +25,8 @@ class server():
         Timer(1, self.start_server).start()
         try:
             self.server_sock.bind(self.address)
-            self.server_sock.listen(1)
-            print(f"Server listening on: {self.ip}:{self.port}")
+            self.server_sock.listen(10)
+            # print(f"Server listening on: {self.ip}:{self.port}")
             self.client_connected, self.client_address = self.server_sock.accept()
             # print("Connected to", self.client_address)
             data = self.client_connected.recv(2048).decode("utf-8")
