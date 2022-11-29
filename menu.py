@@ -457,7 +457,7 @@ class menu:
     def start_online_game(self, type):
         print("starting")
         self.online_game = True
-        # self.start_game(1)
+        self.start_game(1)
         if type == 'client':
             print("# receive data (server)player 2")
             self.scene_.receive_server_input()
