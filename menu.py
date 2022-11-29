@@ -311,6 +311,7 @@ class menu:
                         print(data)
                         self.player_responded = True
                         response = data['message']
+                        break
 
 
                     print("Waiting for player to respond...")
