@@ -26,7 +26,7 @@ class server():
         try:
             self.server_sock.bind(self.address)
             self.server_sock.listen(1)
-            # print(f"Server listening on: {self.ip}:{self.port}")
+            print(f"Server listening on: {self.ip}:{self.port}")
             self.client_connected, self.client_address = self.server_sock.accept()
             # print("Connected to", self.client_address)
             data = self.client_connected.recv(2048).decode("utf-8")
@@ -54,4 +54,6 @@ class server():
             print("receiving game data")
             
 
-# serv = server()
+if __name__ == "__main__":
+    server_ = server()
+    server_.start_server()
