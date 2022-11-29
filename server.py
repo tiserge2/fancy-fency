@@ -40,6 +40,15 @@ class server():
         except socket.error as e:
             str(e)
 
+    def send(self, data):
+        try:
+            self.client_connected.send(str.encode(data))
+            self.status = "SENT"
+        except socket.error as e:
+            self.status = "FAILED"
+            print(e)
+
+
     def process_data(self, data):
         received_data = json.loads(data)
         print("Data: ", received_data)

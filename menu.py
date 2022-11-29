@@ -254,32 +254,25 @@ class menu:
         switcher[option]()
 
     def online_game_type_switcher(self, option):
-        client_ans = client()
         print("responding to ", self.server.client_address)
-        client_ans.connect(self.server.client_address)
 
-        if client_ans.status == "CONNECTED":
-            if option == 1:
-                print("accepting")
-                client_ans.send("{'type':'INVITE', 'message':'YES'}")
-                if client_ans.status == 'SENT':
-                    print("Response sent successfully.")
-                    # here we will lauch the game for player 2
-                else:
-                    print("Failed to send response.")
-                    time.sleep(2)
-                    self.game_type()
+        if option == 1:
+            print("accepting")
+            self.server.send("{'type':'INVITE', 'message':'YES'}")
+            if self.server.status == 'SENT':
+                print("Response sent successfully.")
+                # here we will lauch the game for player 2
             else:
-                print("refusing")
-                client_ans.send("{'type':'INVITE', 'message':'NO'}")
-                if client_ans.status == 'SENT':
-                    print("Response sent successfully.")
-                else:
-                    print("!! Failed to send response.")
+                print("Failed to send response.")
                 time.sleep(2)
                 self.game_type()
         else:
-            print("Cannot connect to this client, there is an issue.")
+            print("refusing")
+            self.server.send("{'type':'INVITE', 'message':'NO'}")
+            if self.server.status == 'SENT':
+                print("Response sent successfully.")
+            else:
+                print("!! Failed to send response.")
             time.sleep(2)
             self.game_type()
 

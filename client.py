@@ -6,6 +6,7 @@ class client():
         self.port = 55555
         self.client_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.status = "INIT"
+        self.response = ""
 
     def get_ip(self):
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -25,7 +26,8 @@ class client():
 
     def send(self, data):
         try:
-            self.client_sock.send(str.encode(data))
+            self.response = self.client_sock.send(str.encode(data))
+            print(self.response)
             self.status = "SENT"
         except socket.error as e:
             self.status = "FAILED"
