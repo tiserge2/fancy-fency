@@ -394,9 +394,6 @@ class menu:
             env_selected = self.scenes[choice - 1]
             env_selected._frame = self.def_conf["game"]["frame"]
 
-            if self.online_game:
-                env_selected.online = True
-
             player_1 = player(position = env_selected._p_1_position, def_range = self.def_conf["player_1"]["def_range"], 
                             att_range = self.def_conf["player_1"]["att_range"], block_time = self.def_conf["player_1"]["block_time"], 
                             mvt_speed = self.def_conf["player_1"]["mvt_speed"], att_speed = self.def_conf["player_1"]["att_speed"])
@@ -405,6 +402,10 @@ class menu:
                             mvt_speed = self.def_conf["player_2"]["mvt_speed"], att_speed = self.def_conf["player_2"]["att_speed"])
             self.scene_ = scene(player_1, player_2, env_selected)
             self.scene_created = True
+            if self.online_game:
+                self.scene_.online = True
+                self.scene_.server = self.server
+                self.scene_.client = self.joueur_1
             # self.scene_.draw_scene()
             self.scene_.showing = True
             self.keyboard_listener = keyboard.Listener(on_press = self.handle_game_pause)
