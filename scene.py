@@ -1,10 +1,8 @@
 from threading import Timer, Thread
 import os
 from pynput import keyboard
-from pynput.keyboard import Key, Controller
-from player import player 
+from pynput.keyboard import Controller
 import time
-from environement import env
 from sound import sound
 import json
 
