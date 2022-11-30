@@ -145,10 +145,11 @@ class scene:
 
     def handle_outer_input(self,key, outer_player):
         print("inside of outer function")
-        try:
-            button = key.char
-        except Exception as e:
-            button = key.name
+        # try:
+        #     button = key.char
+        # except Exception as e:
+        #     button = key.name
+        button = key
 
         if outer_player == 'server':
             # print("server move")
