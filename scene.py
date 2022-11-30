@@ -102,7 +102,7 @@ class scene:
             # print(client_key)
             # similate a button touch here with pynput
             client_key = json.loads(client_key)['key']
-            Thread(target = self.handle_input, args = (client_key,True,"client"))
+            Thread(target = self.handle_outer_input, args = (client_key,"client"))
             # keyboard = Controller()
             # self.from_virtual_key = True
             # if client_key == "right":
@@ -123,7 +123,7 @@ class scene:
             server_key = json.loads(server_key)['key']
             # print(server_key)
             # similate a button touch here with pynput
-            Thread(target = self.handle_input, args = (server_key,True,"server"))
+            Thread(target = self.handle_outer_input, args = (server_key,"server"))
             # keyboard = Controller()
             # if server_key == "right":
             #     keyboard.press(Key.right)
@@ -207,7 +207,7 @@ class scene:
                     Thread(target=self.handle_jump, args=(self.player_1, "LEFT")).start()    
 
     # control the user input when the game is playing
-    def handle_input(self, key, outer = False, outer_player = ""):
+    def handle_input(self, key):
         try:
             button = key.char
         except Exception as e:
