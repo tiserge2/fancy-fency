@@ -22,6 +22,7 @@ class scene:
         self.message_show = False
         self.frame = env._frame
         self.showing = False
+        self.show_pause_menu = False
         self.timer = None
         self.sound = sound()
 
@@ -186,6 +187,9 @@ class scene:
             button = key.name
 
         # print("keyboard is triggeredd:", button)
+        if button == 't':
+            self.showing = False
+            self.show_pause_menu = True
 
         if self.showing:
             #here we will send the data if the game is being played online

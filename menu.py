@@ -32,6 +32,10 @@ class menu:
         if self.server.has_connection:
             self.server.start_server()
 
+    def check_if_pause(self):
+        if self.scene_.show_pause_menu:
+            self.pause_menu()
+
     def check_input_menu(self,inp, start, end):
         try:
             inp = int(inp)
@@ -252,6 +256,7 @@ class menu:
             self.main_menu()
         elif option == 3:
             self.scene_.showing = True
+            self.scene_.show_pause_menu = False
         else:
             self.main_menu()
 
@@ -472,7 +477,7 @@ class menu:
                 self.scene_created = True
                 self.scene_.showing = True
                 self.scene_.draw_scene()
-                self.keyboard_listener = keyboard.Listener(on_press = self.handle_game_pause)
+                # self.keyboard_listener = keyboard.Listener(on_press = self.handle_game_pause)
                 self.keyboard_listener.start()
             
     def handle_game_pause(self, key):
