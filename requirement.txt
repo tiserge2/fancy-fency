@@ -1,3 +1,0 @@
-keyboard
-pynput-1.7.6
-

@@ -318,6 +318,7 @@ class menu:
 
     def send_invite(self, address):
         if address != "1":
+            print("\nTrying to reach the please. Please wait...")
             self.joueur_1.connect((address.split(":")[0], int(address.split(":")[1])))
 
             if self.joueur_1.status == "CONNECTED":
