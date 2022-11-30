@@ -120,9 +120,8 @@ class scene:
 
         if button == "t":
             # initiate the pause for the other player
-            keyboard = Controller()
-            keyboard.press("t")
-            keyboard.release("t")
+            self.showing = False
+            self.show_pause_menu = True
 
         if outer_player == 'server':
             # ============> second player command
@@ -181,6 +180,7 @@ class scene:
 
     # control the user input when the game is playing
     def handle_input(self, key):
+        print(key)
         try:
             button = key.char
         except Exception as e:
