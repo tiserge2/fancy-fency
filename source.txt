@@ -10,3 +10,4 @@ https://stackoverflow.com/questions/5284147/validating-ipv4-addresses-with-regex
 https://www.geeksforgeeks.org/python-playing-audio-file-in-pygame/
 https://stackoverflow.com/questions/42047253/how-to-detect-current-keyboard-language-in-python
 folkstalk.com/tech/how-to-simulate-keyboard-input-in-python-with-code-examples/
+https://stackoverflow.com/questions/69620702/this-process-is-not-trusted-when-running-code-in-pycharmg

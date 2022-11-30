@@ -1,10 +1,8 @@
 from threading import Timer, Thread
 import os
 from pynput import keyboard
-from pynput.keyboard import Key, Controller
-from player import player 
+from pynput.keyboard import Controller
 import time
-from environement import env
 from sound import sound
 import json
 
@@ -186,6 +184,8 @@ class scene:
             button = key.char
         except Exception as e:
             button = key.name
+
+        # print("keyboard is triggeredd:", button)
 
         if self.showing:
             #here we will send the data if the game is being played online

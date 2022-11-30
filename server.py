@@ -1,7 +1,6 @@
 import socket
 from threading import Timer, Thread
 import json
-from client import client
 
 class server():
     def __init__(self):
