@@ -144,12 +144,13 @@ class scene:
         server.send(json.dumps({'type': 'GAME', 'key': key}))
 
     def handle_outer_input(self,key, outer_player):
+        print("inside of outer function")
         try:
             button = key.char
         except Exception as e:
             button = key.name
 
-        if self.online and outer_player == 'server':
+        if outer_player == 'server':
             print("server move")
             # ============> second player command
             if button == "left":
@@ -177,7 +178,7 @@ class scene:
                 # player 2 jumping left
                 if self.can_move(2, "JUMP_LEFT") and self.player_2._moving == False and self.player_2._jumping == False:
                     Thread(target=self.handle_jump, args=(self.player_2, "LEFT")).start()
-        elif self.online and outer_player == 'client':
+        elif outer_player == 'client':
             print("client move")
             # ============> first player command
             if button == "a" :
