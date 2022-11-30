@@ -108,19 +108,21 @@ class scene:
             Thread(target = self.handle_outer_input, args = (server_key,"server")).start()
 
     def send_client_input(self, joueur_1, key):
+        # print("send client")
         joueur_1.send(json.dumps({'type': 'GAME', 'key': key}))
 
     def send_server_input(self, server, key):
+        # print("send client")
         server.send(json.dumps({'type': 'GAME', 'key': key}))
 
     def handle_outer_input(self,key, outer_player):
-        print("here is button:", key)
         button = key
 
         if button == "t":
             # initiate the pause for the other player
-            self.showing = False
-            self.show_pause_menu = True
+            keyboard = Controller()
+            keyboard.press("t")
+            keyboard.release("t")
 
         if outer_player == 'server':
             # ============> second player command
