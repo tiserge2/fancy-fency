@@ -187,6 +187,8 @@ class scene:
         except Exception as e:
             button = key.name
 
+        # print("keyboard is triggeredd:", button)
+
         if self.showing:
             #here we will send the data if the game is being played online
             if self.online:
