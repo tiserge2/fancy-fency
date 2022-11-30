@@ -380,6 +380,8 @@ class menu:
         for root, dirs, files in os.walk(path):
             files_ = files
 
+        files_.sort()
+
         for file in files_:
             env_loaded = env(os.path.join(path, file))
             if env_loaded._is_correct:
