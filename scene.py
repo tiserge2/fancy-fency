@@ -596,10 +596,3 @@ class scene:
                 final_characters[key] = text
 
         return final_characters
-
-
-path = "./ressources/all_env/env1.ffscene"
-env1 = env(path)
-player_1 = player(position = env1._p_1_position, def_range = 4, att_range = 10, block_time = 2, mvt_speed = 0.5, att_speed = 6)
-player_2 = player(position = env1._p_2_position, def_range = 2, att_range = 8, block_time = 2, mvt_speed = 0.5, att_speed = 6)
-scene_1 = scene(player_1, player_2, env1)
