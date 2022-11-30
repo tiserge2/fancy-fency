@@ -96,44 +96,17 @@ class scene:
 
     def receive_client_input(self, server):
         while True:
-            # print("receive client input")
-            # print(server.client_address)
             client_key = server.client_connected.recv(1024).decode()
-            # print(client_key)
             # similate a button touch here with pynput
             client_key = json.loads(client_key)['key']
             Thread(target = self.handle_outer_input, args = (client_key,"client")).start()
-            # keyboard = Controller()
-            # self.from_virtual_key = True
-            # if client_key == "right":
-            #     keyboard.press(Key.right)
-            #     keyboard.release(Key.right)
-            # elif client_key == "left":
-            #     keyboard.press(Key.left)
-            #     keyboard.release(Key.left)
-            # elif client_key in ['a', 's', 'd', 'q', 'w', 'e', 'k', 'l', ',', '.']:
-            #     keyboard.press(client_key)
-            #     keyboard.release(client_key)
 
     def receive_server_input(self, joueur_1):
         while True:
-            # print("receive server input")
             server_key = joueur_1.client_sock.recv(1024).decode()
-            # print(server_key)
             server_key = json.loads(server_key)['key']
-            # print(server_key)
             # similate a button touch here with pynput
             Thread(target = self.handle_outer_input, args = (server_key,"server")).start()
-            # keyboard = Controller()
-            # if server_key == "right":
-            #     keyboard.press(Key.right)
-            #     keyboard.release(Key.right)
-            # elif server_key == "left":
-            #     keyboard.press(Key.left)
-            #     keyboard.release(Key.left)
-            # elif server_key in ['a', 's', 'd', 'q', 'w', 'e', 'k', 'l', ',', '.']:
-            #     keyboard.press(server_key)
-            #     keyboard.release(server_key)
 
     def send_client_input(self, joueur_1, key):
         # print("send client")
@@ -144,15 +117,9 @@ class scene:
         server.send(json.dumps({'type': 'GAME', 'key': key}))
 
     def handle_outer_input(self,key, outer_player):
-        print("inside of outer function")
-        # try:
-        #     button = key.char
-        # except Exception as e:
-        #     button = key.name
         button = key
 
         if outer_player == 'server':
-            # print("server move")
             # ============> second player command
             if button == "left":
                 # move player 2 to the left if possible
@@ -180,7 +147,6 @@ class scene:
                 if self.can_move(2, "JUMP_LEFT") and self.player_2._moving == False and self.player_2._jumping == False:
                     Thread(target=self.handle_jump, args=(self.player_2, "LEFT")).start()
         elif outer_player == 'client':
-            print("client move")
             # ============> first player command
             if button == "a" :
                 # move player 1 to the the left if possible
@@ -332,7 +298,6 @@ class scene:
                     if self.can_move(2, "JUMP_LEFT") and self.player_2._moving == False and self.player_2._jumping == False:
                         Thread(target=self.handle_jump, args=(self.player_2, "LEFT")).start()
                    
-    
     # draw everything related to the game being played
     def draw_whole_env(self):
         score_board_shown = False
@@ -356,7 +321,6 @@ class scene:
         print(" ", "_" * (self.win_width - 2))
 
         characters = self.define_characters()
-
 
         for i in range(self.win_height - 4):
             percentage_win = round((i / (self.win_height)),2)
@@ -389,12 +353,13 @@ class scene:
                 print("|") 
 
             # printing utility debugging stuff
-            # if not game_stats and characters_shown:
-            #     print("\n",f"P1 => Distance: {self.player_1._position} | State: {self.player_1._state}")
-            #     print(f"P2 => Distance: {self.player_2._position} | State: {self.player_2._state}")
-            #     print(f"Distance 1 and 2: {self.player_2._position - self.player_1._position}")
-            #     print(f"Obstacles: {str(self.env._obstacles)}")
-            #     game_stats = True
+            debugging = False
+            if not game_stats and characters_shown and debugging:
+                print("\n",f"P1 => Distance: {self.player_1._position} | State: {self.player_1._state}")
+                print(f"P2 => Distance: {self.player_2._position} | State: {self.player_2._state}")
+                print(f"Distance 1 and 2: {self.player_2._position - self.player_1._position}")
+                print(f"Obstacles: {str(self.env._obstacles)}")
+                game_stats = True
 
     # collision detection
     def can_move(self,player, move):
@@ -442,7 +407,6 @@ class scene:
         self.player_1._state = "REST"
         self.player_2._state = "REST"
         Thread(target=self.sound.play_sound, args=("POINT_ADDED", )).start()
-
 
     #check if on player touch another upon attacking
     def check_touched(self, player_num):

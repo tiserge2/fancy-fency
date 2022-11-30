@@ -68,7 +68,3 @@ class env():
             return True
         else:
             return False
-
-# path = "./ressources/all_env/env1.ffscene"
-# env1 = env(path)
-# print(env1.is_correct)
