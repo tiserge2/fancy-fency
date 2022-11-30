@@ -96,7 +96,7 @@ class scene:
 
     def receive_client_input(self, server):
         while True:
-            print("receive client input")
+            # print("receive client input")
             # print(server.client_address)
             client_key = server.client_connected.recv(1024).decode()
             # print(client_key)
@@ -117,7 +117,7 @@ class scene:
 
     def receive_server_input(self, joueur_1):
         while True:
-            print("receive server input")
+            # print("receive server input")
             server_key = joueur_1.client_sock.recv(1024).decode()
             # print(server_key)
             server_key = json.loads(server_key)['key']
@@ -151,7 +151,7 @@ class scene:
             button = key.name
 
         if outer_player == 'server':
-            print("server move")
+            # print("server move")
             # ============> second player command
             if button == "left":
                 # move player 2 to the left if possible
