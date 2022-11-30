@@ -1,6 +1,5 @@
 class player:    
     def __init__(self, position, def_range, att_range, block_time, mvt_speed, att_speed, point = 0, state = "REST"):
-        print("player created")
         self.state = state
         self.position = position
         self.point = point

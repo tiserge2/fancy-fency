@@ -14,7 +14,6 @@ from server import server
 
 class menu:
     def __init__(self):
-        print("initializing")
         self.scenes = self.load_all_scenes()
         self.def_conf = self.load_default_conf()
         self.loaded_game = self.load_games()
@@ -25,8 +24,13 @@ class menu:
         self.server = server()
         self.joueur_1 = client()
         self.online_game = False
+        self.online_player_type = ""
+        print("Initializing the kernel...")
+        print("server has connection: ", self.server.has_connection)
+        time.sleep(2)
         Thread(target=self.main_menu).start()
-        self.server.start_server()
+        if self.server.has_connection:
+            self.server.start_server()
 
     def check_input_menu(self,inp, start, end):
         try:
@@ -39,7 +43,7 @@ class menu:
             return False, "Should be an integer"
 
     def validate_ip_address(self, address):
-        test = re.match(r"^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]):[0-9]+$", address)
+        test = re.match(r"^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]):[0-9]+$", address) or address == "1"
 
         if not test:
             return False, "Ip Address is not correct."
@@ -70,7 +74,11 @@ class menu:
     def game_type(self):
         os.system("clear")
         if self.server.server_state != "NEW_INVITE":
-            menu_text = "\n1- Local\n2- Online\n3- Back\n\n\n"
+            if self.server.has_connection:
+                menu_text = "\n1- Local\n2- Online\n3- Back\n\n\n"
+            else:
+                menu_text = "\n1- Local\n3- Back\n\n\n"
+
 
             print(menu_text)
 
@@ -82,8 +90,11 @@ class menu:
                 print("\nError: ",error_message)
                 self.flush_input()
                 choice = input("Type your choice: ") 
-        
-            self.game_type_switcher(int(choice))
+            
+            if not self.server.has_connection and int(choice) == 2:
+                self.game_type()
+            else:
+                self.game_type_switcher(int(choice))
         else:
             menu_text = "You've got a new invitation to play.\n\n\n"
 
@@ -131,17 +142,21 @@ class menu:
         
         self.start_game(int(choice))
 
+    # menu to show when the pause is asked in the game
     def pause_menu(self):
         os.system("clear")
-        menu_text = "\n1- Save and Quit\n2- Quit without saving\n\n\n"
+        menu_text = "Game Control\n\nPlayer 1:\n\nq => Move Left,\nd => Move Right,\na => Jump Left,\ne => Jump Right,\nz => Attack,\ns => Block\n\n"
+        menu_text += "Player 2:\n\nLeft Arrow => Move Left,\nRight Arrow => Move Right,\nl => Jump Left,\nm => Jump Right,\no => Attack,\np => Block\n\n\n"
+
+        menu_text += "1- Save and Quit\n2- Quit without saving\n3- Resume\n\n\n"
 
         print(menu_text)
         
         self.flush_input()
         choice = input("Type your choice: ")
 
-        while not self.check_input_menu(choice, 1, 2)[0]:
-            error_message = self.check_input_menu(choice,1, 2)[1]
+        while not self.check_input_menu(choice, 1, 3)[0]:
+            error_message = self.check_input_menu(choice,1, 3)[1]
             print("\nError: ",error_message)
             self.flush_input()
             choice = input("Type your choice: ") 
@@ -232,9 +247,13 @@ class menu:
 
                 with open(path, "w") as f:
                     json.dump(data, f)
+
             self.loaded_game = self.load_games()
-   
-        self.main_menu()
+            self.main_menu()
+        elif option == 3:
+            self.scene_.showing = True
+        else:
+            self.main_menu()
 
     def main_menu_switcher(self,option):
         switcher = {
@@ -286,56 +305,58 @@ class menu:
         os.system("clear")
 
         self.flush_input()
-        address = input("Player Address(IP:PORT): ")
+        address = input("Player Address(IP:PORT) or 1 to return: ")
 
         while not self.validate_ip_address(address)[0]:
             error_message = self.validate_ip_address(address)[1]
             os.system("clear")
             print("Error: ",error_message)
             self.flush_input()
-            address = input("Player Address(IP:PORT): ")
+            address = input("Player Address(IP:PORT) or 1 to return: ")
         
         self.send_invite(address)
 
     def send_invite(self, address):
-        print("Sending invite")
-        self.joueur_1.connect((address.split(":")[0], int(address.split(":")[1])))
+        if address != "1":
+            self.joueur_1.connect((address.split(":")[0], int(address.split(":")[1])))
 
-        if self.joueur_1.status == "CONNECTED":
-            self.joueur_1.send(json.dumps({'type':'INVITE','message': 'INIT'}))
-            
-            if self.joueur_1.status == "SENT":
-                print("Invite sent to player, waiting for answer...")
+            if self.joueur_1.status == "CONNECTED":
+                self.joueur_1.send(json.dumps({'type':'INVITE','message': 'INIT'}))
+                
+                if self.joueur_1.status == "SENT":
+                    print("Invite sent to player, waiting for answer...")
 
-                try:
-                    data = self.joueur_1.client_sock.recv(2048).decode()
-                    data = json.loads(data)
-                    self.player_responded = True
-                    response = data['message']
-                except Exception as e:
-                    response = "NO"
+                    try:
+                        data = self.joueur_1.client_sock.recv(2048).decode()
+                        data = json.loads(data)
+                        self.player_responded = True
+                        response = data['message']
+                    except Exception as e:
+                        response = "NO"
 
-                if not self.player_responded:
-                    print("No response from sent invitation...")
-                    time.sleep(3)
-                    self.game_type()
-                else:
-                    print("Checking player response...")
-                    if response == "YES":
-                        print("Invite was accepted.")
-                        # here we start the game for player 1
-                        self.start_online_game("client")
-                    else:
-                        print("Invite was refused.")
+                    if not self.player_responded:
+                        print("No response from sent invitation...")
                         time.sleep(3)
                         self.game_type()
+                    else:
+                        print("Checking player response...")
+                        if response == "YES":
+                            print("Invite was accepted.")
+                            # here we start the game for player 1
+                            self.start_online_game("client")
+                        else:
+                            print("Invite was refused.")
+                            time.sleep(3)
+                            self.game_type()
+                else:
+                    print("There is an error sending the invite to the player...")
+                    time.sleep(3)
+                    self.game_type()
             else:
-                print("There is an error sending the invite to the player...")
+                print("There is an error connecting to this ip")
                 time.sleep(3)
                 self.game_type()
         else:
-            print("There is an error connecting to this ip")
-            time.sleep(3)
             self.game_type()
 
     def load_games(self):
@@ -353,11 +374,12 @@ class menu:
             return []
 
     def exit_game(self):
+        print("Exiting game! See you...")
+        self.server.server_sock.close()
         if self.scene_created:
             self.scene_.timer.cancel()
-            exit()
-        else:
-            exit()
+        
+        os._exit(0)
 
     def load_default_conf(self):
         path = "./ressources/conf/default_conf.json"
@@ -371,7 +393,7 @@ class menu:
 
     # load all the scenes from ./ressources/all_scenes folder
     def load_all_scenes(self):
-        print("loading all the scenes")
+        print("Loading all the scenes")
         # path to all env
         path = "./ressources/all_env"
         scenes = []
@@ -459,21 +481,18 @@ class menu:
             button = key.name
         
         if button == "t":
+            # here we need to pause the game also for the other player
             self.scene_.showing = False
             self.pause_menu()
-        if button == "y":
-            # self.scene_.frame = 0.05
-            self.scene_.showing = True
 
     def start_online_game(self, type):
         self.online_game = True
         self.start_game(1)
         if type == 'client':
-            self.scene_.type_of_player = 'client'
+            self.online_player_type = 'client'
+            self.scene_.type_of_player = self.online_player_type
             Thread(target = self.scene_.receive_server_input, args=(self.joueur_1, )).start()
         else:
-            self.scene_.type_of_player = 'server'
+            self.online_player_type = 'server'
+            self.scene_.type_of_player = self.online_player_type
             Thread(target = self.scene_.receive_client_input, args=(self.server, )).start()
-
-
-menu_ = menu()

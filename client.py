@@ -6,14 +6,18 @@ class client():
         self.port = 55555
         self.client_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.status = "INIT"
+        self.game_status = ""
         self.response = ""
 
     def get_ip(self):
-        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        sock.connect(("8.8.8.8", 80))
-        address = sock.getsockname()
-        sock.close()
-        return address[0]
+        try:
+            sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            sock.connect(("8.8.8.8", 80))
+            address = sock.getsockname()
+            sock.close()
+            return address[0]
+        except Exception as e:
+            return "Issue connecting"
 
     def connect(self, server_address):
         try:

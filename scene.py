@@ -119,6 +119,12 @@ class scene:
     def handle_outer_input(self,key, outer_player):
         button = key
 
+        if button == "t":
+            # initiate the pause for the other player
+            keyboard = Controller()
+            keyboard.press("t")
+            keyboard.release("t")
+
         if outer_player == 'server':
             # ============> second player command
             if button == "left":
