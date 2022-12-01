@@ -38,69 +38,18 @@ Library used in this projects are:
                 Used to inject some terminal command through **system()**.
             </td>
         </tr>
-        <tr>
-            <td>
-                json
-            </td>
-            <td>
-                Used to parse json objects when communication over network.
-            </td>
-        </tr>
-        <tr>
-            <td>
-                threading
-            </td>
-            <td>
-                Create mutliprocess flow. 
-            </td>
-        </tr>
-        <tr>
-            <td>
-                socket
-            </td>
-            <td>
-                Used to create client/server network communication.
-            </td>
-        </tr>
-        <tr>
-            <td>
-                pynput
-            </td>
-            <td>
-                Through listeners, it pynput's keyboard module catch user input from keyboard.
-            </td>
-        </tr>
-        <tr>
-            <td>
-                time
-            </td>
-            <td>
-                Used to halted the a process during a period using **sleep()**.
-            </td>
-        </tr>
-        <tr>
-            <td>
-                re
-            </td>
-            <td>
-                Used to match pattern through regular expression.
-            </td>
-        </tr>
-        <tr>
-            <td>
-                pigar
-            </td>
-            <td>
-                Used to create requirements.txt files from the system.
-            </td>
-        </tr>
-    </tbody>
 </table>
 
-First Header  | Second Header
+Name  | Objective
 ------------- | -------------
-Content Cell  | Content Cell
-Content Cell  | Content Cell
+os          | Used to inject some terminal command through **system()**.
+json        | Used to parse json objects when communication over network.
+threading   | Create mutliprocess flow. 
+socket      | Used to create client/server network communication.
+pynput      | Through listeners, it pynput's keyboard module catch user input from keyboard.
+time        | Used to halted the a process during a period using **sleep()**.
+re          | Used to match pattern through regular expression.
+pigar       | Used to create requirements.txt files from the system.
 
 ## Installation
 
