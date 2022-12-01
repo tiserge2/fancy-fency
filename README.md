@@ -38,8 +38,11 @@ To use on Mac you will need to allow your terminal to have accessibility access.
 ## Usage
 The game can be played in two mode. Either the two players are on the same machine, or they are on different machines connected on same network. When starting the program, users are presented with a scren showing the IP of the actual users and the other Menu.
 
-
+![Menu Image][menu-image]
     
 ## Credits
 
 ## How to contribute?   
+
+
+[menu-image]: https://github.com/tiserge2/fancy-fency/blob/main/sc_game/menu.png?raw=true
