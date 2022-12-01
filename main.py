@@ -1,4 +1,4 @@
-from menu import menu
+from game import game
 
 if __name__ == "__main__":
-    menu_ = menu()
+    game_ = game()

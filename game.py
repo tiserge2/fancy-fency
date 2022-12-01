@@ -12,7 +12,7 @@ import time
 from server import server
 
 
-class menu:
+class game:
     def __init__(self):
         self.scenes = self.load_all_scenes()
         self.def_conf = self.load_default_conf()
