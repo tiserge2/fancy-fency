@@ -11,11 +11,11 @@ Welcome to the Facny Fencing Game. It aims to create a fencing game using python
 
 This program uses a variety of advanced coding concpets
 
-1- Object Oriented Programming
-2- Multithreading
-3- Sound
-4- Network Communication
-5- Keyboard Listener
+1. Object Oriented Programming
+2. Multithreading
+3. Sound
+4. Network Communication
+5. Keyboard Listener
 
 <p>
 Library used in this projects are:
@@ -36,7 +36,7 @@ Library used in this projects are:
                     os
                 </td>
                 <td>
-                    Objective
+                    Used to inject some terminal command through **system()**.
                 </td>
             </tr>
             <tr>
@@ -44,7 +44,7 @@ Library used in this projects are:
                     json
                 </td>
                 <td>
-                    Objective
+                    Used to parse json objects when communication over network.
                 </td>
             </tr>
             <tr>
@@ -52,7 +52,7 @@ Library used in this projects are:
                     threading
                 </td>
                 <td>
-                    Objective
+                    Create mutliprocess flow. 
                 </td>
             </tr>
             <tr>
@@ -60,7 +60,7 @@ Library used in this projects are:
                     socket
                 </td>
                 <td>
-                    Objective
+                    Used to create client/server network communication.
                 </td>
             </tr>
             <tr>
@@ -68,7 +68,7 @@ Library used in this projects are:
                     pynput
                 </td>
                 <td>
-                    Objective
+                    Through listeners, it pynput's keyboard module catch user input from keyboard.
                 </td>
             </tr>
             <tr>
@@ -76,7 +76,7 @@ Library used in this projects are:
                     time
                 </td>
                 <td>
-                    Objective
+                    Used to halted the a process during a period using **sleep()**.
                 </td>
             </tr>
             <tr>
@@ -84,7 +84,7 @@ Library used in this projects are:
                     re
                 </td>
                 <td>
-                    Objective
+                    Used to match pattern through regular expression.
                 </td>
             </tr>
             <tr>
@@ -92,7 +92,7 @@ Library used in this projects are:
                     pigar
                 </td>
                 <td>
-                    Objective
+                    Used to create requirements.txt files from the system.
                 </td>
             </tr>
         </tbody>
