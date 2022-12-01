@@ -52,27 +52,27 @@ The game can be played in two mode. Either the two players are on the same machi
     
 ### Command to play
 <p>
-Player 1:
+Player 1:</br></br>
 
-q => Move Left,
-d => Move Right,
-a => Jump Left,
-e => Jump Right,
-z => Attack,
-s => Block
+q => Move Left,</br>
+d => Move Right,</br>
+a => Jump Left,</br>
+e => Jump Right,</br>
+z => Attack,</br>
+s => Block</br></br>
 
-Player 2:
+Player 2:</br></br>
 
-Left Arrow => Move Left,
-Right Arrow => Move Right,
-l => Jump Left,
-m => Jump Right,
-o => Attack,
-p => Block
+Left Arrow => Move Left,</br>
+Right Arrow => Move Right,</br>
+l => Jump Left,</br>
+m => Jump Right,</br>
+o => Attack,</br>
+p => Block</br>
 </p>
-## Credits
 
 ## How to contribute?   
+
 
 
 [menu-image]: https://github.com/tiserge2/fancy-fency/blob/main/sc_game/menu.png?raw=true
