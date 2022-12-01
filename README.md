@@ -35,12 +35,12 @@ This program uses a variety of advanced coding concpets
 ## Usage
 The game can be played in two way. Either the two players are on the same machine, or they are on different machines connected on same network. When starting the program, users are presented with a scren showing the IP of the actual users and the other Menu.
 
-    <ul>
-        <li>Object Oriented Programming</li>
-        <li>Multithreading</li>
-        <li>Sound</li>
-        <li>Network Communication</li>
-    </ul>
+<ul>
+    <li>Object Oriented Programming</li>
+    <li>Multithreading</li>
+    <li>Sound</li>
+    <li>Network Communication</li>
+</ul>
     
 ## Credits
 
