@@ -38,7 +38,17 @@ To use on Mac you will need to allow your terminal to have accessibility access.
 ## Usage
 The game can be played in two mode. Either the two players are on the same machine, or they are on different machines connected on same network. When starting the program, users are presented with a scren showing the IP of the actual users and the other Menu.
 
+> Menu image when the game is first launched
 ![Menu Image][menu-image]
+
+> Game mode selection
+![Game Selection][game-selection]
+
+> Continue a saved game
+![Saved Game][saved-game]
+
+> Users actually playing
+![Game Playing][game-playing]
     
 ## Credits
 
@@ -46,3 +56,6 @@ The game can be played in two mode. Either the two players are on the same machi
 
 
 [menu-image]: https://github.com/tiserge2/fancy-fency/blob/main/sc_game/menu.png?raw=true
+[saved-game]: https://github.com/tiserge2/fancy-fency/blob/main/sc_game/saved_game.png?raw=true
+[game-selection]: https://github.com/tiserge2/fancy-fency/blob/main/sc_game/game_selection.png?raw=true
+[game-playing]: https://github.com/tiserge2/fancy-fency/blob/main/sc_game/game_playing.png?raw=true
