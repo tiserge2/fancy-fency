@@ -10,13 +10,11 @@ Welcome to the Facny Fencing Game. It aims to create a fencing game using python
 ## Technologies
 <p>
 This program uses a variety of advanced coding concpets
-    <ul>
-        <li>Object Oriented Programming</li>
-        <li>Multithreading</li>
-        <li>Sound</li>
-        <li>Network Communication</li>
-        <li>Keyboard Listener</li>
-    </ul>
+* Object Oriented Programming
+* Multithreading
+* Sound
+* Network Communication
+* Keyboard Listener
 </p>
 
 <p>
@@ -154,12 +152,10 @@ p => Block</br>
 </p>
 
 ## How to contribute?   
-<ul>
-    <ol>Fork the project</ol>
-    <ol>Make a pull request</ol>
-    <ol>Wait for it to get merged</ol>
-    <ol>And be happy to contribute there :-)</ol>
-</ul>
+1. Fork the project
+2. Make a pull request
+3. Wait for it to get merged
+4. And be happy to contribute there :-)
 
 **Feel free to open Issues whenever possible. This is the very basic version, and we are looking forward to make it run as smooth as possible on every platform.**
 
