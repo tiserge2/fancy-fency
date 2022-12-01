@@ -56,7 +56,11 @@ class game:
 
     # different menu showing
     def main_menu(self):
-        os.system("clear")
+        if os.name == 'nt':
+            os.system("cls")
+        else:
+            os.system("clear")
+
         menu_text = "\n1- Start a new game\n2- Continue a saved game\n3- Quit\n\n"
 
         if type(self.server) != str:
@@ -76,7 +80,11 @@ class game:
         self.main_menu_switcher(int(choice))
 
     def game_type(self):
-        os.system("clear")
+        if os.name == 'nt':
+            os.system("cls")
+        else:
+            os.system("clear")
+
         if self.server.server_state != "NEW_INVITE":
             if self.server.has_connection:
                 menu_text = "\n1- Local\n2- Online\n3- Back\n\n\n"
@@ -118,7 +126,10 @@ class game:
             self.online_game_type_switcher(int(choice))
 
     def choose_scene(self):
-        os.system("clear")
+        if os.name == 'nt':
+            os.system("cls")
+        else:
+            os.system("clear")
 
         menu_text = ""
         menu_item = 0
@@ -148,7 +159,11 @@ class game:
 
     # menu to show when the pause is asked in the game
     def pause_menu(self):
-        os.system("clear")
+        if os.name == 'nt':
+            os.system("cls")
+        else:
+            os.system("clear")
+
         menu_text = "Game Control\n\nPlayer 1:\n\nq => Move Left,\nd => Move Right,\na => Jump Left,\ne => Jump Right,\nz => Attack,\ns => Block\n\n"
         menu_text += "Player 2:\n\nLeft Arrow => Move Left,\nRight Arrow => Move Right,\nl => Jump Left,\nm => Jump Right,\no => Attack,\np => Block\n\n\n"
 
@@ -168,7 +183,10 @@ class game:
         self.quit_actual_game(int(choice))
 
     def loaded_games_menu(self):
-        os.system("clear")
+        if os.name == 'nt':
+            os.system("cls")
+        else:
+            os.system("clear")
 
         menu_text = ""
         menu_item = 0
@@ -307,14 +325,21 @@ class game:
 
     # search for players over the network
     def launch_player_research(self):
-        os.system("clear")
+        if os.name == 'nt':
+            os.system("cls")
+        else:
+            os.system("clear")
 
         self.flush_input()
         address = input("Player Address(IP:PORT) or 1 to return: ")
 
         while not self.validate_ip_address(address)[0]:
             error_message = self.validate_ip_address(address)[1]
-            os.system("clear")
+            if os.name == 'nt':
+                os.system("cls")
+            else:
+                os.system("clear")
+                
             print("Error: ",error_message)
             self.flush_input()
             address = input("Player Address(IP:PORT) or 1 to return: ")

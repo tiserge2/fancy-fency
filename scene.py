@@ -32,7 +32,11 @@ class scene:
         self.timer.start()
         """ TODO: make the clear screen work for windows also """
         if self.showing:
-            os.system("clear")
+            if os.name == 'nt':
+                os.system("cls")
+            else:
+                os.system("clear")
+                
             self.draw_whole_env()
 
     # change player state based on their speed attributes

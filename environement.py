@@ -53,7 +53,7 @@ class env():
             self.scene_name = self.path.split("/")[-1].split(".")[0]
                     
             for i in range(len(content)):
-                if content[i] == "X":
+                if content[i] == "x":
                     # obstacles detected
                     self.obstacles.append(i)
 
