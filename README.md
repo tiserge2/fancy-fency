@@ -1,5 +1,5 @@
 
-![linux-tested][linux-tested]
+![linux-tested][linux-tested] ![windows-tested][windows-tested] ![mac-tested][mac-tested] 
 
 # :person_fencing:	fancy-fencing :person_fencing:	
 _Let the fight begin_
@@ -99,3 +99,5 @@ p => Block</br>
 [game-selection]: https://github.com/tiserge2/fancy-fency/blob/main/sc_game/game_selection.png?raw=true
 [game-playing]: https://github.com/tiserge2/fancy-fency/blob/main/sc_game/game_playing.png?raw=true
 [linux-tested]: https://img.shields.io/badge/Linux-Tested%20on%20Linux-brightgreen?raw=true
+[windows-tested]: https://img.shields.io/badge/Windows-Tested%20on%20Windows-yellowgreen?raw=true
+[mac-tested]: https://img.shields.io/badge/Mac-Buggy%20on%20Windows-orange?raw=true
