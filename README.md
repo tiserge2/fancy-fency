@@ -4,7 +4,7 @@ _Let the fight begin_
 
 ## Description
 <p>
-Welcome to the Facny Fencing Game. It aims to create a fencing game using python. This project initally was given in my Advanced Programming course. It was told we can add it to github and share it publicly. But from my side I choose to make it possible for other people willing to contribute to open source project to particiapte, learn and share thoughts and code, in order to improve it. The project subject can be found here. 
+Welcome to the Facny Fencing Game. It aims to create a funny :joy: fencing game using python. This project initally was given in my Advanced Programming course :school:. It was told we can add it to github and share it publicly :v:. But from my side I choose to make it possible for other people willing to contribute to open source project to particiapte, learn and share thoughts and code, in order to improve it. The project subject can be found here. 
 </p>
 
 ## Technologies
@@ -82,11 +82,12 @@ o => Attack,</br>
 p => Block</br>
 </p>
 
-## How to contribute :-)?   
+## How to contribute :+1:?   
 1. Fork the project :fork_and_knife:	
 2. Make a pull request :flight_arrival:	
 3. Wait for it to get merged :heavy_check_mark:	
 4. And be happy to contribute there :hugs:	
+5. Don't forget to :star2:	the project
 
 **Feel free to open Issues whenever possible. This is the very basic version, and we are looking forward to make it run as smooth as possible on every platform.**
 
