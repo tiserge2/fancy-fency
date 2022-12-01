@@ -50,6 +50,26 @@ The game can be played in two mode. Either the two players are on the same machi
 > Users actually playing
 ![Game Playing][game-playing]
     
+### Command to play
+<p>
+Player 1:
+
+q => Move Left,
+d => Move Right,
+a => Jump Left,
+e => Jump Right,
+z => Attack,
+s => Block
+
+Player 2:
+
+Left Arrow => Move Left,
+Right Arrow => Move Right,
+l => Jump Left,
+m => Jump Right,
+o => Attack,
+p => Block
+</p>
 ## Credits
 
 ## How to contribute?   
