@@ -1,6 +1,6 @@
 
 # fancy-fencing
-__Let the fight begin__
+_Let the fight begin_
 
 ## Description
 <p>
@@ -17,87 +17,90 @@ This program uses a variety of advanced coding concpets
 4. Network Communication
 5. Keyboard Listener
 
-<p>
 Library used in this projects are:
-    <table>
-        <thead>
-            <tr>
-                <td>
-                    Name
-                </td>
-                <td>
-                    Objective
-                </td>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>
-                    os
-                </td>
-                <td>
-                    Used to inject some terminal command through **system()**.
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    json
-                </td>
-                <td>
-                    Used to parse json objects when communication over network.
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    threading
-                </td>
-                <td>
-                    Create mutliprocess flow. 
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    socket
-                </td>
-                <td>
-                    Used to create client/server network communication.
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    pynput
-                </td>
-                <td>
-                    Through listeners, it pynput's keyboard module catch user input from keyboard.
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    time
-                </td>
-                <td>
-                    Used to halted the a process during a period using **sleep()**.
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    re
-                </td>
-                <td>
-                    Used to match pattern through regular expression.
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    pigar
-                </td>
-                <td>
-                    Used to create requirements.txt files from the system.
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</p>
+<table>
+    <thead>
+        <tr>
+            <td>
+                Name
+            </td>
+            <td>
+                Objective
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                os
+            </td>
+            <td>
+                Used to inject some terminal command through **system()**.
+            </td>
+        </tr>
+        <tr>
+            <td>
+                json
+            </td>
+            <td>
+                Used to parse json objects when communication over network.
+            </td>
+        </tr>
+        <tr>
+            <td>
+                threading
+            </td>
+            <td>
+                Create mutliprocess flow. 
+            </td>
+        </tr>
+        <tr>
+            <td>
+                socket
+            </td>
+            <td>
+                Used to create client/server network communication.
+            </td>
+        </tr>
+        <tr>
+            <td>
+                pynput
+            </td>
+            <td>
+                Through listeners, it pynput's keyboard module catch user input from keyboard.
+            </td>
+        </tr>
+        <tr>
+            <td>
+                time
+            </td>
+            <td>
+                Used to halted the a process during a period using **sleep()**.
+            </td>
+        </tr>
+        <tr>
+            <td>
+                re
+            </td>
+            <td>
+                Used to match pattern through regular expression.
+            </td>
+        </tr>
+        <tr>
+            <td>
+                pigar
+            </td>
+            <td>
+                Used to create requirements.txt files from the system.
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+First Header  | Second Header
+------------- | -------------
+Content Cell  | Content Cell
+Content Cell  | Content Cell
 
 ## Installation
 
