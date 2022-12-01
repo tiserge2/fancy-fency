@@ -15,6 +15,7 @@ This program uses a variety of advanced coding concpets
         <li>Multithreading</li>
         <li>Sound</li>
         <li>Network Communication</li>
+        <li>Keyboard Listener</li>
     </ul>
 </p>
 
@@ -22,7 +23,11 @@ This program uses a variety of advanced coding concpets
 
 ### Requirements
 
-** Please use Python3.10 to run this project to avoid compatibility issues. **
+**
+Please use Python3.10 to run this project to avoid compatibility issues. 
+Highly recommended not to use on Macbook because of an issue existing with pynput module.
+To use on Mac you will need to allow your terminal to have accessibility access.
+**
 
 ### Package Install
 
