@@ -32,10 +32,12 @@ class game:
         if self.server.has_connection:
             self.server.start_server()
 
+    # check if the user want to pause the game
     def check_if_pause(self):
         if self.scene_.show_pause_menu:
             self.pause_menu()
 
+    # validate the input from the menus
     def check_input_menu(self,inp, start, end):
         try:
             inp = int(inp)
@@ -46,6 +48,7 @@ class game:
         except Exception as e:
             return False, "Should be an integer"
 
+    # check if the ip entered is correct or if the user want to go back
     def validate_ip_address(self, address):
         test = re.match(r"^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]):[0-9]+$", address) or address == "1"
 
@@ -79,6 +82,7 @@ class game:
         
         self.main_menu_switcher(int(choice))
 
+    # choose between online and offline playing
     def game_type(self):
         if os.name == 'nt':
             os.system("cls")
@@ -125,6 +129,7 @@ class game:
         
             self.online_game_type_switcher(int(choice))
 
+    # choose which scenes to load
     def choose_scene(self):
         if os.name == 'nt':
             os.system("cls")
@@ -182,6 +187,7 @@ class game:
         
         self.quit_actual_game(int(choice))
 
+    # choose between the saved games which one to continue
     def loaded_games_menu(self):
         if os.name == 'nt':
             os.system("cls")
@@ -214,6 +220,7 @@ class game:
         
         self.start_loaded_game(int(choice))
 
+    # fix issue when getting user input, and we have data in instream
     def flush_input(self):
         try:
             import msvcrt
@@ -339,13 +346,14 @@ class game:
                 os.system("cls")
             else:
                 os.system("clear")
-                
+
             print("Error: ",error_message)
             self.flush_input()
             address = input("Player Address(IP:PORT) or 1 to return: ")
         
         self.send_invite(address)
 
+    # ask online player to join for a game
     def send_invite(self, address):
         if address != "1":
             print("\nTrying to reach the please. Please wait...")
@@ -390,6 +398,7 @@ class game:
         else:
             self.game_type()
 
+    # load saved games from the json file
     def load_games(self):
         path = "./ressources/saved_games/all_games.json"
 
@@ -404,6 +413,7 @@ class game:
         else:
             return []
 
+    # exit entirely from the program
     def exit_game(self):
         print("Exiting game! See you...")
         self.server.server_sock.close()
@@ -412,6 +422,7 @@ class game:
         
         os._exit(0)
 
+    # load the configuration about the scenes
     def load_default_conf(self):
         path = "./ressources/conf/default_conf.json"
 

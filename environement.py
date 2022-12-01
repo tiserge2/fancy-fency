@@ -42,10 +42,11 @@ class env():
     def _frame(self, new_frame):
         self.frame = new_frame
 
+    # parse a scene getting the starting position of each player and the obstacles
     def parse_scene(self):
         content = ""
 
-        # TO-DO: check if the path is correct
+        # check if the path is correct
         if(os.path.exists(self.path)):
             with open(self.path, "r") as f:
                 content = f.read()
