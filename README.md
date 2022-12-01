@@ -29,21 +29,16 @@ To use on Mac you will need to allow your terminal to have accessibility access.
 
 ### Package Install
 
-    pip3 install requirement.txt
+    pip3 install requirements.txt
 
 ### Running the program
 
     python3.10 ./main.py
 
 ## Usage
-The game can be played in two way. Either the two players are on the same machine, or they are on different machines connected on same network. When starting the program, users are presented with a scren showing the IP of the actual users and the other Menu.
+The game can be played in two mode. Either the two players are on the same machine, or they are on different machines connected on same network. When starting the program, users are presented with a scren showing the IP of the actual users and the other Menu.
 
-<ul>
-    <li>Object Oriented Programming</li>
-    <li>Multithreading</li>
-    <li>Sound</li>
-    <li>Network Communication</li>
-</ul>
+
     
 ## Credits
 
