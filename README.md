@@ -1,5 +1,5 @@
 
-# fancy-fencing
+# :person_fencing:	fancy-fencing :person_fencing:	
 _Let the fight begin_
 
 ## Description
@@ -83,10 +83,10 @@ p => Block</br>
 </p>
 
 ## How to contribute :-)?   
-1. Fork the project
-2. Make a pull request
-3. Wait for it to get merged
-4. And be happy to contribute there :-)
+1. Fork the project :fork_and_knife:	
+2. Make a pull request :flight_arrival:	
+3. Wait for it to get merged :heavy_check_mark:	
+4. And be happy to contribute there :hugs:	
 
 **Feel free to open Issues whenever possible. This is the very basic version, and we are looking forward to make it run as smooth as possible on every platform.**
 
