@@ -49,7 +49,6 @@ class server():
             self.status = "FAILED"
             print(e)
 
-
     def process_data(self, data):
         received_data = json.loads(data)
         self.received_data = received_data
@@ -67,7 +66,3 @@ class server():
         elif received_data['type'] == "ALT" and received_data == "RESUME":
             self.server_state = "RESUME"
             
-
-if __name__ == "__main__":
-    server_ = server()
-    server_.start_server()
