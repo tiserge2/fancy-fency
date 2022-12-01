@@ -9,8 +9,6 @@ class env():
         self.scene_name = ""
         self.frame = 5
         self.is_correct = self.parse_scene()
-        # define env ground symbol, player 1 init start pos, player 2 init start pos, obstacle pos
-        # define scence width
 
     @property
     def _p_1_position(self):

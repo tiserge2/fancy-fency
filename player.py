@@ -16,6 +16,7 @@ class player:
     def _state(self):
         return self.state
     @_state.setter
+    
     def _state(self, new_state):
         self.state = new_state
 
