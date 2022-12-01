@@ -8,14 +8,14 @@ Welcome to the Facny Fencing Game. It aims to create a fencing game using python
 </p>
 
 ## Technologies
-<p>
+
 This program uses a variety of advanced coding concpets
+
 1- Object Oriented Programming
 2- Multithreading
 3- Sound
 4- Network Communication
 5- Keyboard Listener
-</p>
 
 <p>
 Library used in this projects are:
