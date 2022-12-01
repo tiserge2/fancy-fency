@@ -19,6 +19,88 @@ This program uses a variety of advanced coding concpets
     </ul>
 </p>
 
+<p>
+Library used in this projects are:
+    <table>
+        <thead>
+            <tr>
+                <td>
+                    Name
+                </td>
+                <td>
+                    Objective
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    os
+                </td>
+                <td>
+                    Objective
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    json
+                </td>
+                <td>
+                    Objective
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    threading
+                </td>
+                <td>
+                    Objective
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    socket
+                </td>
+                <td>
+                    Objective
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    pynput
+                </td>
+                <td>
+                    Objective
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    time
+                </td>
+                <td>
+                    Objective
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    re
+                </td>
+                <td>
+                    Objective
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    pigar
+                </td>
+                <td>
+                    Objective
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</p>
+
 ## Installation
 
 ### Requirements
@@ -72,7 +154,14 @@ p => Block</br>
 </p>
 
 ## How to contribute?   
+<ul>
+    <ol>Fork the project</ol>
+    <ol>Make a pull request</ol>
+    <ol>Wait for it to get merged</ol>
+    <ol>And be happy to contribute there :-)</ol>
+</ul>
 
+**Feel free to open Issues whenever possible. This is the very basic version, and we are looking forward to make it run as smooth as possible on every platform.**
 
 
 [menu-image]: https://github.com/tiserge2/fancy-fency/blob/main/sc_game/menu.png?raw=true
