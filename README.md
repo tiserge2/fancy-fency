@@ -10,11 +10,11 @@ Welcome to the Facny Fencing Game. It aims to create a fencing game using python
 ## Technologies
 <p>
 This program uses a variety of advanced coding concpets
-* Object Oriented Programming
-* Multithreading
+- Object Oriented Programming
++ Multithreading
 * Sound
-* Network Communication
-* Keyboard Listener
+- Network Communication
++ Keyboard Listener
 </p>
 
 <p>
