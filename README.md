@@ -18,27 +18,6 @@ This program uses a variety of advanced coding concpets
 5. Keyboard Listener
 
 Library used in this projects are:
-<table>
-    <thead>
-        <tr>
-            <td>
-                Name
-            </td>
-            <td>
-                Objective
-            </td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                os
-            </td>
-            <td>
-                Used to inject some terminal command through **system()**.
-            </td>
-        </tr>
-</table>
 
 Name  | Objective
 ------------- | -------------
@@ -103,7 +82,7 @@ o => Attack,</br>
 p => Block</br>
 </p>
 
-## How to contribute?   
+## How to contribute :-)?   
 1. Fork the project
 2. Make a pull request
 3. Wait for it to get merged
